@@ -1,0 +1,88 @@
+import 'package:flutter/material.dart';
+import 'package:matchpoint/screens/authenticate/authenticate.dart';
+import 'package:matchpoint/screens/authenticate/login.dart';
+import 'package:matchpoint/services/auth.dart';
+
+class Register extends StatefulWidget {
+
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final AuthService _auth = AuthService();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60.0),
+            child: TextField(
+                autocorrect: false,
+                enableSuggestions: false,
+                controller: emailController,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.white, width: 0.0),
+                  ),
+                  hintText: "Email",
+                  hintStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+          ),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60.0),
+            child: TextField(
+                  autocorrect: false,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  controller: passwordController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 0.0),
+                    ),
+                    hintText: "Password",
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+          ),
+          Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 60.0, vertical: 10),
+                  child: FlatButton(
+                    onPressed: () async {
+                      dynamic result = await _auth.register(
+                          emailController.value.text,
+                          passwordController.value.text);
+
+                      if (result == null) {
+                        print('error');
+                      } else {
+                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => Authenticate()));
+                      }
+                    },
+                    color: Colors.black38,
+                    padding: EdgeInsets.all(10),
+                    child: Text('Register',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+        ],
+    );
+  }
+}

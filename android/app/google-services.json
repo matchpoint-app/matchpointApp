@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "620442851379",
+    "firebase_url": "https://matchpoint-163a4.firebaseio.com",
+    "project_id": "matchpoint-163a4",
+    "storage_bucket": "matchpoint-163a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620442851379:android:bca196092ff5ab3db2ab46",
+        "android_client_info": {
+          "package_name": "com.arcticcode.matchpoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620442851379-174oqasvn8vhj0hqth8vdgsl3khm7eik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx79P1QqrGQNvMArejf-VPpSX84ruPL7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620442851379-174oqasvn8vhj0hqth8vdgsl3khm7eik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
