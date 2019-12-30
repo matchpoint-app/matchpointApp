@@ -32,9 +32,9 @@ class _RegisterState extends State<Register> {
                     borderSide:
                         const BorderSide(color: Colors.white, width: 0.0),
                   ),
-                  hintText: "Email",
-                  hintStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Email",
+                  labelStyle: TextStyle(
+                    color: Colors.white38,
                   ),
                 ),
               ),
@@ -53,9 +53,9 @@ class _RegisterState extends State<Register> {
                       borderSide:
                           const BorderSide(color: Colors.white, width: 0.0),
                     ),
-                    hintText: "Password",
-                    hintStyle: TextStyle(
-                      color: Colors.white,
+                    labelText: "Password",
+                    labelStyle: TextStyle(
+                      color: Colors.white38,
                     ),
                   ),
                 ),
@@ -64,6 +64,7 @@ class _RegisterState extends State<Register> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 60.0, vertical: 10),
                   child: FlatButton(
+                    disabledTextColor: Colors.white38,
                     onPressed: () async {
                       dynamic result = await _auth.register(
                           emailController.value.text,
