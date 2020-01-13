@@ -15,6 +15,26 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   bool _isButtonDisabled = true;
 
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
+  void _fieldFocusChange(BuildContext ctx, FocusNode current, FocusNode next) {
+    current.unfocus();
+    FocusScope.of(ctx).requestFocus(next);
+  }
+
+  void submit() async {
+    dynamic result = await _auth.signIn(
+        emailController.value.text, passwordController.value.text);
+
+    if (result == null) {
+      print('error');
+      print(result);
+    } else {
+      Navigator.of(context).pushReplacementNamed(Routes.Home);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AuthBackground(
@@ -36,6 +56,10 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: TextField(
+                focusNode: _emailFocus,
+                onSubmitted: (term) {
+                  _fieldFocusChange(context, _emailFocus, _passwordFocus);
+                },
                 autocorrect: false,
                 enableSuggestions: false,
                 controller: emailController,
@@ -60,6 +84,10 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: TextField(
+                focusNode: _passwordFocus,
+                onSubmitted: (term) {
+                  submit();
+                },
                 onChanged: (text) {
                   this._isButtonDisabled = false;
                 },
@@ -91,18 +119,7 @@ class _LoginState extends State<Login> {
                       horizontal: 60.0, vertical: 10),
                   child: FlatButton(
                     disabledColor: Colors.black38,
-                    onPressed: () async {
-                      dynamic result = await _auth.signIn(
-                          emailController.value.text,
-                          passwordController.value.text);
-
-                      if (result == null) {
-                        print('error');
-                        print(result);
-                      } else {
-                        Navigator.of(context).pushReplacementNamed(Routes.Home);
-                      }
-                    },
+                    onPressed: submit,
                     color: Colors.black38,
                     padding: EdgeInsets.all(10),
                     child: Text('Login',
