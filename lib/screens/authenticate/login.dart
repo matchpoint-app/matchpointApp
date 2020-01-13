@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:matchpoint/screens/authenticate/register.dart';
-import 'package:matchpoint/screens/home/home.dart';
+import 'package:matchpoint/routes.dart';
+import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth.dart';
 
 class Login extends StatefulWidget {
-  final Function callback;
-
-  Login(this.callback);
+  Login();
   @override
   _LoginState createState() => _LoginState();
 }
@@ -19,7 +17,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return AuthBackground(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Text(
@@ -99,8 +98,9 @@ class _LoginState extends State<Login> {
 
                       if (result == null) {
                         print('error');
+                        print(result);
                       } else {
-                        this.widget.callback(new Home());
+                        Navigator.of(context).pushReplacementNamed(Routes.Home);
                       }
                     },
                     color: Colors.black38,
@@ -115,7 +115,8 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
                   child: FlatButton(
                     onPressed: () {
-                      this.widget.callback(new Register());
+                      Navigator.of(context)
+                          .pushReplacementNamed(Routes.Register);
                     },
                     color: Colors.black38,
                     padding: EdgeInsets.all(10),
@@ -129,6 +130,6 @@ class _LoginState extends State<Login> {
           ],
         ),
       ],
-    );
+    ));
   }
 }
