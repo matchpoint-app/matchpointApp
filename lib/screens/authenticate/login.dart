@@ -93,22 +93,21 @@ class _LoginState extends State<Login> {
                   child: FlatButton(
                     disabledColor: Colors.black38,
                     onPressed: () async {
-                            dynamic result = await _auth.signIn(
-                                emailController.value.text,
-                                passwordController.value.text);
+                      dynamic result = await _auth.signIn(
+                          emailController.value.text,
+                          passwordController.value.text);
 
-                            if (result == null) {
-                              print('error');
-                            } else {
-                              this.widget.callback(new Home());
-                            }
-                          },
+                      if (result == null) {
+                        print('error');
+                      } else {
+                        this.widget.callback(new Home());
+                      }
+                    },
                     color: Colors.black38,
                     padding: EdgeInsets.all(10),
                     child: Text('Login',
                         style: TextStyle(
-                            color:  Colors.white,
-                            fontWeight: FontWeight.bold)),
+                            color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ),
                 Padding(
