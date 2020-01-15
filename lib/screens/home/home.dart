@@ -5,6 +5,6 @@ import 'package:matchpoint/ui/layout.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Layout(pageTitle: 'Home', body: Games());
+    return Layout(pageTitle: 'Sports', body: Games());
   }
 }

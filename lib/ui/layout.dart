@@ -18,25 +18,25 @@ class Layout extends StatelessWidget {
         appBar: AppBar(
           title: Text(pageTitle),
         ),
-        bottomNavigationBar: includeBottomNav
-            ? BottomNavigationBar(
-                currentIndex: 0,
-                items: [
-                  BottomNavigationBarItem(
-                    title: Text('Games'),
-                    icon: const Icon(Icons.sync),
-                  ),
-                  BottomNavigationBarItem(
-                    title: Text('Chat'),
-                    icon: const Icon(Icons.chat_bubble_outline),
-                  ),
-                  BottomNavigationBarItem(
-                    title: Text('Profile'),
-                    icon: const Icon(Icons.settings),
-                  ),
-                ],
-              )
-            : null,
+        bottomNavigationBar: includeBottomNav ? buildBottomNavigation() : null,
         body: body);
   }
+
+  Widget buildBottomNavigation() => BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          BottomNavigationBarItem(
+            title: Text('Games'),
+            icon: const Icon(Icons.sync),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Chat'),
+            icon: const Icon(Icons.chat_bubble_outline),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Profile'),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+      );
 }
