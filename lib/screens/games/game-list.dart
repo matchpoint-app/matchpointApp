@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/game-card.dart';
 import 'package:matchpoint/ui/layout.dart';
+import 'dart:math';
 
 class Game {
   const Game(
@@ -23,8 +24,13 @@ class GameList extends StatelessWidget {
           title: 'Game ${i + 1}',
           location: 'Enskede Rackethall',
           time: 'Sun, 10:00-11:00',
-          usersJoined: 3,
+          usersJoined: Random().nextInt(5),
           usersMax: 4));
+
+  void onListItemClick(BuildContext ctx) {
+    Navigator.push(
+        ctx, new MaterialPageRoute(builder: (ctx) => new GameList("asd")));
+  }
 
   @override
   Widget build(BuildContext ctx) {
@@ -32,14 +38,16 @@ class GameList extends StatelessWidget {
         pageTitle: pageTitle,
         includeBottomNav: false,
         body: ListView(
-            children: list.map((game) {
-          return new GameCard(
-            title: game.title,
-            time: game.time,
-            location: game.location,
-            usersJoined: game.usersJoined,
-            usersMax: game.usersMax,
-          );
-        }).toList()));
+            children: list
+                .map((game) => GestureDetector(
+                    onTap: () => onListItemClick(ctx),
+                    child: GameCard(
+                      title: game.title,
+                      time: game.time,
+                      location: game.location,
+                      usersJoined: game.usersJoined,
+                      usersMax: game.usersMax,
+                    )))
+                .toList()));
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:matchpoint/screens/games/games.dart';
+import 'package:matchpoint/screens/games/games-list.dart';
 import 'package:matchpoint/ui/layout.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Layout(pageTitle: 'Sports', body: Games());
+    return Layout(pageTitle: 'Sports', body: GamesList());
   }
 }

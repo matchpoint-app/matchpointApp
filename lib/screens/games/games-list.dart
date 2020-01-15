@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/game-list.dart';
-import 'package:matchpoint/screens/games/list-item.dart';
+import 'package:matchpoint/screens/games/games-item.dart';
 
-class Games extends StatelessWidget {
+class GamesList extends StatelessWidget {
   final List items = ["Tennis", "Football", "Badminton", "Hockey", "Running"];
 
   void onPress(String title, BuildContext ctx) {
@@ -12,7 +12,7 @@ class Games extends StatelessWidget {
   }
 
   List<Widget> getItems(BuildContext ctx) => items
-      .map((title) => ListItem(
+      .map((title) => GamesItem(
             title: title,
             onPress: (title) => this.onPress(title, ctx),
           ))

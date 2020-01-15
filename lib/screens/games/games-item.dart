@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ListItem extends StatelessWidget {
-  ListItem({@required this.title, this.onPress});
+class GamesItem extends StatelessWidget {
+  GamesItem({@required this.title, this.onPress});
 
   final String title;
   final Function(String) onPress;
