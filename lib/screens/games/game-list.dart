@@ -21,7 +21,9 @@ class GameList extends StatelessWidget {
 
   void onListItemClick(BuildContext ctx) {
     Navigator.push(
-        ctx, new MaterialPageRoute(builder: (ctx) => new GameList("asd")));
+        ctx,
+        new MaterialPageRoute(
+            builder: (ctx) => new GameList("asd"), fullscreenDialog: true));
   }
 
   @override
