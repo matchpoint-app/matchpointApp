@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:matchpoint/models/game.dart';
 
 class GameCard extends StatelessWidget {
-  const GameCard(
-      {this.title, this.location, this.time, this.usersJoined, this.usersMax});
+  const GameCard(this.game);
 
-  final String title;
-  final String location;
-  final String time;
-  final int usersJoined;
-  final int usersMax;
+  final Game game;
 
   @override
   Widget build(BuildContext ctx) {
@@ -23,7 +19,7 @@ class GameCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(title,
+                Text(game.title,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Padding(
@@ -33,7 +29,7 @@ class GameCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.calendar_today)),
                       Text(
-                        time,
+                        game.time,
                       )
                     ])),
                 Padding(
@@ -43,16 +39,16 @@ class GameCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.add_location)),
                       Text(
-                        location,
+                        game.location,
                       )
                     ])),
               ],
             ),
             Spacer(),
             FloatingActionButton(
-              heroTag: title,
+              heroTag: game.title,
               onPressed: () => {},
-              child: Text("$usersJoined/$usersMax"),
+              child: Text("${game.usersJoined}/${game.usersMax}"),
             ),
           ],
         ),

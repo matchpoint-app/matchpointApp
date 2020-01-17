@@ -6,17 +6,22 @@ class Game {
   final int usersJoined;
   final int usersMax;
 
-  Game(this.id, this.title, this.location, this.time, this.usersJoined,
-      this.usersMax);
+  Game(
+      {this.id,
+      this.title,
+      this.location,
+      this.time,
+      this.usersJoined,
+      this.usersMax});
 
   factory Game.fromJson(dynamic json) {
     return Game(
-        json['id'] as String,
-        json['title'] as String,
-        json['location'] as String,
-        json['time'] as String,
-        json['usersJoined'] as int,
-        json['usersMax'] as int);
+        id: json['id'] as String,
+        title: json['title'] as String,
+        location: json['location'] as String,
+        time: json['time'] as String,
+        usersJoined: json['usersJoined'] as int,
+        usersMax: json['usersMax'] as int);
   }
 
   @override

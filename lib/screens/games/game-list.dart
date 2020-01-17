@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/screens/games/game-card.dart';
 import 'package:matchpoint/ui/layout.dart';
 import 'dart:math';
-
-class Game {
-  const Game(
-      {this.title, this.time, this.location, this.usersJoined, this.usersMax});
-  final String title;
-  final String time;
-  final String location;
-  final int usersJoined;
-  final int usersMax;
-}
 
 class GameList extends StatelessWidget {
   GameList(this.pageTitle);
@@ -21,6 +12,7 @@ class GameList extends StatelessWidget {
   final List<Game> list = new List<Game>.generate(
       10,
       (i) => new Game(
+          id: '$i',
           title: 'Game ${i + 1}',
           location: 'Enskede Rackethall',
           time: 'Sun, 10:00-11:00',
@@ -40,14 +32,7 @@ class GameList extends StatelessWidget {
         body: ListView(
             children: list
                 .map((game) => GestureDetector(
-                    onTap: () => onListItemClick(ctx),
-                    child: GameCard(
-                      title: game.title,
-                      time: game.time,
-                      location: game.location,
-                      usersJoined: game.usersJoined,
-                      usersMax: game.usersMax,
-                    )))
+                    onTap: () => onListItemClick(ctx), child: GameCard(game)))
                 .toList()));
   }
 }
