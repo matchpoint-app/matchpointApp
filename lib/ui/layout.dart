@@ -7,6 +7,7 @@ class Layout extends StatelessWidget {
       this.includeBottomNav = true,
       this.floatingActionButton,
       this.floatingActionButtonLocation,
+      this.actions,
       Key key})
       : super(key: key);
 
@@ -15,12 +16,14 @@ class Layout extends StatelessWidget {
   final FloatingActionButtonLocation floatingActionButtonLocation;
   final String pageTitle;
   final bool includeBottomNav;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(pageTitle),
+          actions: actions,
         ),
         bottomNavigationBar: includeBottomNav ? buildBottomNavigation() : null,
         floatingActionButton: floatingActionButton,

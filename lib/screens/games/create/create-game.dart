@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/ui/layout.dart';
+import 'package:matchpoint/ui/user-list-item.dart';
 
 class CreateGame extends StatelessWidget {
   final String pageTitle;
@@ -8,6 +9,10 @@ class CreateGame extends StatelessWidget {
   const CreateGame(this.pageTitle);
 
   void _onAddFriendPressed() {
+    // TODO: impl
+  }
+
+  void _onRemoveFriendPressed() {
     // TODO: impl
   }
 
@@ -67,36 +72,14 @@ class CreateGame extends StatelessWidget {
                         onPressed: _onAddFriendPressed,
                       )),
                   Divider(),
-                  ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      size: 48,
-                    ),
-                    title: Text("Conny"),
-                    subtitle: Row(children: <Widget>[
-                      Icon(Icons.star, size: 14, color: Colors.black45),
-                      Text(" 4.2 / 5", style: TextStyle(fontSize: 12))
-                    ]),
-                    trailing: Icon(
-                      Icons.remove_circle,
-                      color: Colors.redAccent,
-                    ),
+                  UserListItem(
+                    name: 'Conny',
+                    rating: '3.5/5',
                   ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      size: 48,
-                    ),
-                    title: Text("Berit"),
-                    subtitle: Row(children: <Widget>[
-                      Icon(Icons.star, size: 14, color: Colors.black45),
-                      Text(" 5 / 5", style: TextStyle(fontSize: 12))
-                    ]),
-                    trailing: Icon(
-                      Icons.remove_circle,
-                      color: Colors.redAccent,
-                    ),
-                  )
+                  UserListItem(
+                    name: 'Berit',
+                    rating: '5.0/5',
+                  ),
                 ],
               )),
         ]));
