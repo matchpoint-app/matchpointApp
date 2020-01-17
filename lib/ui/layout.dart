@@ -5,10 +5,14 @@ class Layout extends StatelessWidget {
       {@required this.body,
       @required this.pageTitle,
       this.includeBottomNav = true,
+      this.floatingActionButton,
+      this.floatingActionButtonLocation,
       Key key})
       : super(key: key);
 
   final Widget body;
+  final Widget floatingActionButton;
+  final FloatingActionButtonLocation floatingActionButtonLocation;
   final String pageTitle;
   final bool includeBottomNav;
 
@@ -19,6 +23,8 @@ class Layout extends StatelessWidget {
           title: Text(pageTitle),
         ),
         bottomNavigationBar: includeBottomNav ? buildBottomNavigation() : null,
+        floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: floatingActionButtonLocation,
         body: body);
   }
 
