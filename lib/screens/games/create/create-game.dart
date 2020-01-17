@@ -51,6 +51,7 @@ class CreateGame extends StatelessWidget {
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: TextFormField(
+                      maxLines: 2,
                       decoration: InputDecoration(labelText: "Description")))),
           Card(
               margin: EdgeInsets.all(12),
