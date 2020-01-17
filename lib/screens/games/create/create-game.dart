@@ -7,18 +7,15 @@ class CreateGame extends StatelessWidget {
 
   const CreateGame(this.pageTitle);
 
+  void _onAddFriendPressed() {
+    // TODO: impl
+  }
+
   @override
   Widget build(BuildContext ctx) {
     return Layout(
         pageTitle: "Create $pageTitle",
         body: ListView(children: <Widget>[
-          Card(
-              margin: EdgeInsets.all(12),
-              elevation: 4,
-              child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: TextFormField(
-                      decoration: InputDecoration(labelText: "Description")))),
           Card(
               margin: EdgeInsets.all(12),
               elevation: 4,
@@ -45,9 +42,62 @@ class CreateGame extends StatelessWidget {
                       child:
                           Text("Skill level", style: TextStyle(fontSize: 16))),
                   Slider(
-                      min: 0.0, max: 10.0, onChanged: (value) => {}, value: 4)
+                      min: 0.0, max: 10.0, value: 4, onChanged: (value) => {})
                 ],
-              ))
+              )),
+          Card(
+              margin: EdgeInsets.all(12),
+              elevation: 4,
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: TextFormField(
+                      decoration: InputDecoration(labelText: "Description")))),
+          Card(
+              margin: EdgeInsets.all(12),
+              elevation: 4,
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                      title: Text("Invite friends"),
+                      trailing: FloatingActionButton(
+                        child: Icon(Icons.add),
+                        mini: true,
+                        elevation: 0,
+                        onPressed: _onAddFriendPressed,
+                      )),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(
+                      Icons.person,
+                      size: 48,
+                    ),
+                    title: Text("Conny"),
+                    subtitle: Row(children: <Widget>[
+                      Icon(Icons.star, size: 14, color: Colors.black45),
+                      Text(" 4.2 / 5", style: TextStyle(fontSize: 12))
+                    ]),
+                    trailing: Icon(
+                      Icons.remove_circle,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.person,
+                      size: 48,
+                    ),
+                    title: Text("Berit"),
+                    subtitle: Row(children: <Widget>[
+                      Icon(Icons.star, size: 14, color: Colors.black45),
+                      Text(" 5 / 5", style: TextStyle(fontSize: 12))
+                    ]),
+                    trailing: Icon(
+                      Icons.remove_circle,
+                      color: Colors.redAccent,
+                    ),
+                  )
+                ],
+              )),
         ]));
   }
 }
