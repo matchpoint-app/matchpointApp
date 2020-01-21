@@ -72,68 +72,98 @@ class _CreateGameState extends State<CreateGame> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                    child: Text(widget.pageTitle,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.calendar_today),
-                    title: Text(_date == null ? "Select date" : _date),
-                    onTap: () => _selectDate(context),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.add_location),
-                    title: Text("Select location"),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Text("Skill level: ${_sliderValue.toInt()}",
-                          style: TextStyle(fontSize: 16))),
-                  Slider(
-                      min: 0.0,
-                      max: 10.0,
-                      value: _sliderValue,
-                      onChanged: (value) =>
-                          setState(() => _sliderValue = value.roundToDouble()))
-                ],
+                children: <Widget>[title, date, location, skillText, slider],
               )),
-          Card(
-              margin: EdgeInsets.all(12),
-              elevation: 4,
-              child: Container(
-                  padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
-                  child: TextFormField(
-                      maxLines: 2,
-                      decoration: InputDecoration(labelText: "Description")))),
-          Card(
-              margin: EdgeInsets.all(12),
-              elevation: 4,
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                      title: Text("Invite friends"),
-                      trailing: FloatingActionButton(
-                        child: Icon(Icons.add),
-                        mini: true,
-                        elevation: 0,
-                        onPressed: _onAddFriendPressed,
-                      )),
-                  Divider(),
-                  UserListItem(
-                    name: 'Conny',
-                    rating: '3.5/5',
-                    onRemoveTap: _onRemoveFriendPressed,
-                  ),
-                  UserListItem(
-                    name: 'Berit',
-                    rating: '5.0/5',
-                    onRemoveTap: _onRemoveFriendPressed,
-                  ),
-                ],
-              )),
+          cardDescription,
+          friends,
         ]));
+  }
+
+  Widget get title {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Text(widget.pageTitle,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget get date {
+    return ListTile(
+      leading: Icon(Icons.calendar_today),
+      title: Text(_date == null ? "Select date" : _date),
+      onTap: () => _selectDate(context),
+    );
+  }
+
+  Widget get location {
+    return ListTile(
+      leading: Icon(Icons.add_location),
+      title: Text("Select location"),
+    );
+  }
+
+  Widget get skillText {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+        child: RichText(
+            text: TextSpan(
+          style: TextStyle(fontSize: 16, color: Colors.black),
+          children: [
+            TextSpan(text: "Skill level: "),
+            TextSpan(
+                text: "${_sliderValue.toInt()}",
+                style: TextStyle(fontWeight: FontWeight.bold))
+          ],
+        )));
+  }
+
+  Widget get slider {
+    return Slider(
+        min: 0.0,
+        max: 10.0,
+        value: _sliderValue,
+        onChanged: (value) {
+          setState(() => _sliderValue = value.roundToDouble());
+        });
+  }
+
+  Widget get cardDescription {
+    return Card(
+        margin: EdgeInsets.all(12),
+        elevation: 4,
+        child: Container(
+            padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
+            child: TextFormField(
+                maxLines: 2,
+                decoration: InputDecoration(labelText: "Description"))));
+  }
+
+  Widget get friends {
+    return Card(
+        margin: EdgeInsets.all(12),
+        elevation: 4,
+        child: Column(
+          children: <Widget>[
+            ListTile(
+                title: Text("Invite friends"),
+                trailing: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  mini: true,
+                  elevation: 0,
+                  onPressed: _onAddFriendPressed,
+                )),
+            Divider(),
+            UserListItem(
+              name: 'Conny',
+              rating: '3.5/5',
+              onRemoveTap: _onRemoveFriendPressed,
+            ),
+            UserListItem(
+              name: 'Berit',
+              rating: '5.0/5',
+              onRemoveTap: _onRemoveFriendPressed,
+            ),
+          ],
+        ));
   }
 }
