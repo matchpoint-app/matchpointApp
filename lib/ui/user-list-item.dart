@@ -20,10 +20,10 @@ class UserListItem extends StatelessWidget {
         Icon(Icons.star, size: 14, color: Colors.black45),
         Text(rating, style: TextStyle(fontSize: 12))
       ]),
-      trailing: onRemoveTap == null
+      trailing: onRemoveTap != null
           ? IconButton(
               icon: Icon(Icons.remove_circle),
-              color: Colors.redAccent,
+              color: Colors.red,
               onPressed: onRemoveTap,
             )
           : null,

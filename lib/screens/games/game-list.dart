@@ -39,7 +39,9 @@ class GameList extends StatelessWidget {
               Navigator.push(
                   ctx,
                   MaterialPageRoute(
-                      builder: (ctx) => CreateGame(pageTitle),
+                      builder: (ctx) => CreateGame(
+                            pageTitle: this.pageTitle,
+                          ),
                       fullscreenDialog: true));
             }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
