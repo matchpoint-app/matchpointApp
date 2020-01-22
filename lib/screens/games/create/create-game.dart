@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/ui/layout.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key key, this.pageTitle}) : super(key: key);
@@ -99,6 +101,10 @@ class _CreateGameState extends State<CreateGame> {
     return ListTile(
       leading: Icon(Icons.add_location),
       title: Text("Select location"),
+      onTap: () async {
+        LocationResult result = await showLocationPicker(
+            context, "AIzaSyAIJTbnUWF1HJgLtsWbXDLGKGYZX4qs4z8");
+      },
     );
   }
 
