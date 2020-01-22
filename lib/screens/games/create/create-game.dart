@@ -104,6 +104,7 @@ class _CreateGameState extends State<CreateGame> {
       onTap: () async {
         LocationResult result = await showLocationPicker(
             context, "AIzaSyAIJTbnUWF1HJgLtsWbXDLGKGYZX4qs4z8");
+        print("Selected location: " + result.toString());
       },
     );
   }
