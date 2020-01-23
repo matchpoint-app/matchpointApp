@@ -121,39 +121,38 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 60.0, vertical: 30),
-                  child: FlatButton(
-                    disabledColor: Colors.black38,
-                    onPressed: _isLoading ? null : submit,
-                    color: Colors.black38,
-                    padding: EdgeInsets.all(10),
-                    child: Text(FlutterI18n.translate(context, "common.login"),
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
-                  child: FlatButton(
-                    onPressed: () => _isLoading
-                        ? null
-                        : Navigator.of(context)
-                            .pushReplacementNamed(Routes.Register),
-                    color: Colors.black38,
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                        FlutterI18n.translate(context, "common.register"),
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(60, 40, 60, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FlatButton(
+                      disabledColor: Colors.black38,
+                      onPressed: _isLoading ? null : submit,
+                      color: Colors.black38,
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                          FlutterI18n.translate(context, "common.login"),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    FlatButton(
+                      onPressed: () => _isLoading
+                          ? null
+                          : Navigator.of(context)
+                              .pushReplacementNamed(Routes.Register),
+                      color: Colors.black38,
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                          FlutterI18n.translate(context, "common.register"),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                )),
           ],
         ),
       ],
