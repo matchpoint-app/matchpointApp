@@ -29,7 +29,7 @@ class GameCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.calendar_today)),
                       Text(
-                        game.time,
+                        game.time.toString(),
                       )
                     ])),
                 Padding(
@@ -39,7 +39,7 @@ class GameCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.add_location)),
                       Text(
-                        game.location,
+                        game.location.toString(),
                       )
                     ])),
               ],
@@ -48,7 +48,7 @@ class GameCard extends StatelessWidget {
             FloatingActionButton(
               heroTag: game.title,
               onPressed: () => {},
-              child: Text("${game.usersJoined}/${game.usersMax}"),
+              child: Text("${game.players}/${game.usersMax}"),
             ),
           ],
         ),

@@ -9,7 +9,8 @@ void main() {
     "title": "a title",
     "location": "a location",
     "time": "some time",
-    "usersJoined": 3,
+    "players": 3,
+    "invitedPlayers: 2,
     "usersMax": 4
     }''';
 
@@ -21,7 +22,8 @@ void main() {
     expect(s.title, "a title");
     expect(s.location, "a location");
     expect(s.time, "some time");
-    expect(s.usersJoined, 3);
+    expect(s.players, 3);
+    expect(s.invitedPlayers, 2);
     expect(s.usersMax, 4);
   });
 }
