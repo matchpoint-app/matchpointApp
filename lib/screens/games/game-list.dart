@@ -1,23 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:matchpoint/models/game.dart';
+import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/screens/games/create/create-game.dart';
 import 'package:matchpoint/screens/games/game-card.dart';
+import 'package:matchpoint/services/eventDatabase.dart';
 import 'package:matchpoint/ui/layout.dart';
-import 'dart:math';
 
 class GameList extends StatelessWidget {
   GameList(this.pageTitle);
 
   final String pageTitle;
 
+  List<Map<String, dynamic>> players = [];
+  final test = EventDatabaseService().getEvents();
   final List<Game> list = new List<Game>.generate(
       10,
       (i) => new Game(
           id: '$i',
           title: 'Game ${i + 1}',
-          location: 'Enskede Rackethall',
-          time: 'Sun, 10:00-11:00',
-          usersJoined: Random().nextInt(5),
+          location: new Location(),
+          time: DateTime.now(),
+          players: [{'userId': 1}, {'userId': 2}],
           usersMax: 4));
 
   void onListItemClick(BuildContext ctx) {
