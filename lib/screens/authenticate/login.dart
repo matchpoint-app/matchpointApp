@@ -3,6 +3,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth.dart';
+import 'package:matchpoint/ui/loading-indicator.dart';
 
 class Login extends StatefulWidget {
   Login();
@@ -14,7 +15,7 @@ class _LoginState extends State<Login> {
   final AuthService _auth = AuthService();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool _isButtonDisabled = true;
+  bool _isLoading = false;
 
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
@@ -25,9 +26,11 @@ class _LoginState extends State<Login> {
   }
 
   void submit() async {
+    setState(() => _isLoading = true);
     dynamic result = await _auth.signIn(
         emailController.value.text, passwordController.value.text);
 
+    setState(() => _isLoading = false);
     if (result == null) {
       print('error');
       print(result);
@@ -51,12 +54,19 @@ class _LoginState extends State<Login> {
             decoration: TextDecoration.none,
           ),
         ),
+        Center(
+          child: Opacity(
+            opacity: _isLoading ? 1 : 0,
+            child: LoadingIndicator(),
+          ),
+        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: TextField(
+                enabled: !_isLoading,
                 focusNode: _emailFocus,
                 onSubmitted: (term) {
                   _fieldFocusChange(context, _emailFocus, _passwordFocus);
@@ -75,7 +85,7 @@ class _LoginState extends State<Login> {
                     borderSide:
                         const BorderSide(color: Colors.white, width: 0.0),
                   ),
-                  labelText: "Email",
+                  labelText: FlutterI18n.translate(context, "common.email"),
                   labelStyle: TextStyle(
                     color: Colors.white38,
                   ),
@@ -85,12 +95,10 @@ class _LoginState extends State<Login> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: TextField(
+                enabled: !_isLoading,
                 focusNode: _passwordFocus,
                 onSubmitted: (term) {
                   submit();
-                },
-                onChanged: (text) {
-                  this._isButtonDisabled = false;
                 },
                 autocorrect: false,
                 obscureText: true,
@@ -106,7 +114,7 @@ class _LoginState extends State<Login> {
                     borderSide:
                         const BorderSide(color: Colors.white, width: 0.0),
                   ),
-                  labelText: "Password",
+                  labelText: FlutterI18n.translate(context, "common.password"),
                   labelStyle: TextStyle(
                     color: Colors.white38,
                   ),
@@ -117,13 +125,13 @@ class _LoginState extends State<Login> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 60.0, vertical: 10),
+                      horizontal: 60.0, vertical: 30),
                   child: FlatButton(
                     disabledColor: Colors.black38,
-                    onPressed: submit,
+                    onPressed: _isLoading ? null : submit,
                     color: Colors.black38,
                     padding: EdgeInsets.all(10),
-                    child: Text('Login',
+                    child: Text(FlutterI18n.translate(context, "common.login"),
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
@@ -132,19 +140,20 @@ class _LoginState extends State<Login> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
                   child: FlatButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(Routes.Register);
-                    },
+                    onPressed: () => _isLoading
+                        ? null
+                        : Navigator.of(context)
+                            .pushReplacementNamed(Routes.Register),
                     color: Colors.black38,
                     padding: EdgeInsets.all(10),
-                    child: Text('Register',
+                    child: Text(
+                        FlutterI18n.translate(context, "common.register"),
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ],

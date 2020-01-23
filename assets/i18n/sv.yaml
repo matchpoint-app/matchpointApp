@@ -1,0 +1,7 @@
+app:
+  title: "Matchpoint"
+
+common:
+  email: "E-mail"
+  password: "Lösenord"
+  register: "Registrera"

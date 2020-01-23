@@ -1,1 +1,8 @@
-app.title: "Matchpoint"
+app:
+  title: "Matchpoint"
+
+common:
+  email: "E-mail"
+  password: "Password"
+  register: "Register"
+  login: "Login"
