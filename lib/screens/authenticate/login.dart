@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth.dart';
@@ -42,7 +43,7 @@ class _LoginState extends State<Login> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Text(
-          'Matchpoint',
+          FlutterI18n.translate(context, "app.title"),
           style: TextStyle(
             color: Colors.white,
             fontSize: 40,
