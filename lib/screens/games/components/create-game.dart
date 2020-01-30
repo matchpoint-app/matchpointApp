@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
-import 'package:matchpoint/ui/layout.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key key, this.pageTitle}) : super(key: key);
@@ -32,15 +29,18 @@ class _CreateGameState extends State<CreateGame> {
 
   void _onDonePressed(BuildContext ctx) {
     final game = new Game(
-          id: 'Test',
-          title: 'Game time',
-          type: 'Tennis',
-          location: new Location(),
-          time: DateTime.now(),
-          players: [{'userId': 1}, {'userId': 2}],
-          usersMax: 4);
+        id: 'Test',
+        title: 'Game time',
+        type: 'Tennis',
+        location: new Location(),
+        time: DateTime.now(),
+        players: [
+          {'userId': 1},
+          {'userId': 2}
+        ],
+        usersMax: 4);
 
-          EventDatabaseService().updateEvent(game);
+    EventDatabaseService().updateEvent(game);
 
     Navigator.of(ctx).pop();
   }
@@ -70,9 +70,8 @@ class _CreateGameState extends State<CreateGame> {
 
   @override
   Widget build(BuildContext ctx) {
-    return Layout(
-        pageTitle: "Create ${widget.pageTitle}",
-        actions: <Widget>[
+    return Scaffold(
+        appBar: AppBar(title: Text("Create"), actions: <Widget>[
           FlatButton(
             textColor: Colors.white,
             onPressed: () => _onDonePressed(ctx),
@@ -81,7 +80,7 @@ class _CreateGameState extends State<CreateGame> {
               style: TextStyle(fontSize: 16),
             ),
           )
-        ],
+        ]),
         body: ListView(children: <Widget>[
           Card(
               margin: EdgeInsets.all(12),

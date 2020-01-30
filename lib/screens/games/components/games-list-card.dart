@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:matchpoint/models/game.dart';
 
-class GameCard extends StatelessWidget {
-  const GameCard(this.game);
+class GamesListCard extends StatelessWidget {
+  const GamesListCard(this.game);
 
   final Game game;
 
