@@ -6,3 +6,13 @@ common:
   password: "Password"
   register: "Register"
   login: "Login"
+
+activities:
+  tennis: "Tennis"
+  football: "Football"
+  hockey: "Hockey"
+  badminton: "Badminton"
+  running: "Running"
+
+games:
+  games: "Games"
