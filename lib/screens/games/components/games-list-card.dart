@@ -45,10 +45,17 @@ class GamesListCard extends StatelessWidget {
               ],
             ),
             Spacer(),
-            FloatingActionButton(
-              heroTag: game.title,
-              onPressed: () => {},
-              child: Text("${game.players.length}/${game.maxPlayers}"),
+            Container(
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(
+                      width: 2,
+                      color: Colors.deepOrange,
+                      style: BorderStyle.solid)),
+              child: Center(
+                  child: Text("${game.players.length}/${game.maxPlayers}")),
             ),
           ],
         ),

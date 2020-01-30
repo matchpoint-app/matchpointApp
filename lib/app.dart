@@ -9,16 +9,8 @@ class MatchpointApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matchpoint',
       theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-          // counter didn't reset back to zero; the application is not restarted.
-          primarySwatch: Colors.blue,
-          buttonColor: Colors.pink,
+          primarySwatch: Colors.deepOrange,
+          buttonColor: Colors.blue,
           primaryIconTheme: IconThemeData(color: Colors.black)),
       home: AppContainer(title: 'MatchpointApp'),
     );
@@ -44,10 +36,9 @@ class _AppContainerState extends State<AppContainer> {
       body: PageView(
         children: [
           Container(
-            color: Colors.white,
             child: HomeContainer(),
           ),
-          Container(color: Colors.white, child: GamesContainer()),
+          Container(child: GamesContainer()),
         ],
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
