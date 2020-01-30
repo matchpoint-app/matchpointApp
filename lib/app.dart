@@ -10,7 +10,6 @@ class MatchpointApp extends StatelessWidget {
       title: 'Matchpoint',
       theme: ThemeData(
           primarySwatch: Colors.deepOrange,
-          buttonColor: Colors.blue,
           primaryIconTheme: IconThemeData(color: Colors.black)),
       home: AppContainer(title: 'MatchpointApp'),
     );
