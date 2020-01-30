@@ -48,7 +48,7 @@ class GamesListCard extends StatelessWidget {
             FloatingActionButton(
               heroTag: game.title,
               onPressed: () => {},
-              child: Text("${game.players}/${game.usersMax}"),
+              child: Text("${game.players.length}/${game.maxPlayers}"),
             ),
           ],
         ),

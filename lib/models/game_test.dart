@@ -11,7 +11,7 @@ void main() {
     "time": "some time",
     "players": 3,
     "invitedPlayers: 2,
-    "usersMax": 4
+    "maxPlayers": 4
     }''';
 
   test('Decode Json', () {
@@ -24,6 +24,6 @@ void main() {
     expect(s.time, "some time");
     expect(s.players, 3);
     expect(s.invitedPlayers, 2);
-    expect(s.usersMax, 4);
+    expect(s.maxPlayers, 4);
   });
 }
