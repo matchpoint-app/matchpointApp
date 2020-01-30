@@ -54,6 +54,7 @@ class _AppContainerState extends State<AppContainer> {
         onPageChanged: onPageChanged,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.home,
@@ -61,8 +62,18 @@ class _AppContainerState extends State<AppContainer> {
               title: Container(height: 0.0),
               backgroundColor: Colors.white),
           BottomNavigationBarItem(
-              icon: Icon(Icons.search,
+              icon: Icon(Icons.games,
                   color: (_page == 1) ? Colors.black : Colors.grey),
+              title: Container(height: 0.0),
+              backgroundColor: Colors.white),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.chat_bubble,
+                  color: (_page == 2) ? Colors.black : Colors.grey),
+              title: Container(height: 0.0),
+              backgroundColor: Colors.white),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline,
+                  color: (_page == 3) ? Colors.black : Colors.grey),
               title: Container(height: 0.0),
               backgroundColor: Colors.white),
         ],
@@ -73,6 +84,7 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void navigationTapped(int page) {
+    if (page >= 2) return;
     pageController.jumpToPage(page);
   }
 
