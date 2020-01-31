@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/game.dart';
@@ -33,12 +34,12 @@ class _CreateGameState extends State<CreateGame> {
         title: 'Game time',
         type: 'Tennis',
         location: new Location(),
-        time: DateTime.now(),
+        time: Timestamp.now(),
         players: [
           {'userId': 1},
           {'userId': 2}
         ],
-        maxPlayers: 4);
+        usersMax: 4);
 
     EventDatabaseService().updateEvent(game);
 
