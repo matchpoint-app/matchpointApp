@@ -15,21 +15,24 @@ class _GamesContainerState extends State<GamesContainer> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text("Games")),
+          title: Center(
+              child: Text(FlutterI18n.translate(context, 'games.games'))),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              print('press');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (ctx) => CreateGame(
-                            pageTitle: "test",
-                          ),
-                      fullscreenDialog: true));
-            }),
+        floatingActionButton: floatingActionButton,
         body: GamesList());
+  }
+
+  Widget get floatingActionButton {
+    return FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (ctx) => CreateGame(
+                pageTitle: "test",
+              ),
+            )));
   }
 }

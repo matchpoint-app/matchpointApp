@@ -2,59 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
 import 'package:matchpoint/screens/profile/profile.dart';
+import 'package:matchpoint/screens/social/social.dart';
 
-class MatchpointApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Matchpoint',
-      theme: ThemeData(
-          primaryColor: Color.fromRGBO(43, 59, 67, 1),
-          scaffoldBackgroundColor: Color.fromRGBO(234, 234, 234, 1),
-          primaryTextTheme: TextTheme(
-            title: TextStyle(color: Color.fromRGBO(234, 234, 234, 1))
-          ),
-          textTheme: TextTheme(
-            body1: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
-            body2: TextStyle(color: Color.fromRGBO(43, 59, 67, 1))
-          ),
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Color.fromRGBO(221, 110, 66, 1),
-            foregroundColor: Color.fromRGBO(234, 234, 234, 1)
-          ),
-          iconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1)),
-          primaryIconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1))),
-      home: AppContainer(title: 'MatchpointApp'),
-    );
-  }
-}
-
-class AppContainer extends StatefulWidget {
-  AppContainer({Key key, this.title}) : super(key: key);
+class MatchpointApp extends StatefulWidget {
+  MatchpointApp({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _AppContainerState createState() => _AppContainerState();
+  _MatchpointAppState createState() => _MatchpointAppState();
 }
 
 PageController pageController;
 
-class _AppContainerState extends State<AppContainer> {
+class _MatchpointAppState extends State<MatchpointApp> {
   int _page = 0;
+
+  final List<Widget> mainNavigation = [
+    Container(
+      child: HomeContainer(),
+    ),
+    Container(child: GamesContainer()),
+    Container(child: Social()),
+    Container(child: Profile()),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: [
-          Container(
-            child: HomeContainer(),
-          ),
-          Container(child: GamesContainer()),
-          Container(child: GamesContainer()),
-          Container(child: Profile()),
-        ],
+        children: mainNavigation,
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
@@ -94,9 +70,8 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void onPageChanged(int page) {
-    setState(() {
-      this._page = page;
-    });
+    assert(page >= 0 && page < mainNavigation.length);
+    setState(() => this._page = page);
   }
 
   @override
