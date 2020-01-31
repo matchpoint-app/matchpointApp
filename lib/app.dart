@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
+import 'package:matchpoint/screens/profile/profile.dart';
 
 class MatchpointApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -48,6 +49,8 @@ class _AppContainerState extends State<AppContainer> {
             child: HomeContainer(),
           ),
           Container(color: Colors.white, child: GamesContainer()),
+          Container(color: Colors.white, child: GamesContainer()),
+          Container(color: Colors.white, child: Profile()),
         ],
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -84,7 +87,6 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void navigationTapped(int page) {
-    if (page >= 2) return;
     pageController.jumpToPage(page);
   }
 
