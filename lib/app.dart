@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
 import 'package:matchpoint/screens/profile/profile.dart';
-import 'package:matchpoint/screens/social/social.dart';
+import 'package:matchpoint/screens/social/containers/social.dart';
 
 class MatchpointApp extends StatefulWidget {
   MatchpointApp({Key key, this.title}) : super(key: key);
@@ -22,7 +22,7 @@ class _MatchpointAppState extends State<MatchpointApp> {
       child: HomeContainer(),
     ),
     Container(child: GamesContainer()),
-    Container(child: Social()),
+    Container(child: SocialContainer()),
     Container(child: Profile()),
   ];
 

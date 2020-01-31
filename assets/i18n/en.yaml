@@ -16,3 +16,7 @@ activities:
 
 games:
   games: "Games"
+
+social:
+  social: "Social"
+  search: "Search"
