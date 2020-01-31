@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:matchpoint/models/location.dart';
 
 class Game {
@@ -5,10 +6,10 @@ class Game {
   final String title;
   final String type;
   final Location location;
-  final DateTime time;
-  final List<Map<String, dynamic>> players;
-  final List<Map<String, dynamic>> invitedPlayers;
-  final int maxPlayers;
+  final Timestamp time;
+  final List<dynamic> players;
+  final List<dynamic> invitedPlayers;
+  final int usersMax;
 
   Game(
       {this.id,
@@ -18,18 +19,18 @@ class Game {
       this.time,
       this.players,
       this.invitedPlayers,
-      this.maxPlayers});
+      this.usersMax});
 
-  factory Game.fromJson(dynamic json) {
+   factory Game.fromJson(dynamic json) {
     return Game(
         id: json['id'] as String,
         title: json['title'] as String,
         type: json['type'] as String,
-        location: json['location'] as Location,
-        time: json['time'] as DateTime,
-        players: json['usersJoined'] as dynamic,
+        location: Location.fromJson(json['location']),
+        time: json['time'] as Timestamp,
+        players: json['players'] as dynamic,
         invitedPlayers: json['invitedPlayers'] as dynamic,
-        maxPlayers: json['maxPlayers'] as int);
+        usersMax: json['usersMax'] as int);
   }
 
   Map<String, dynamic> toJson() => {
@@ -40,7 +41,7 @@ class Game {
         'time': time,
         'players': players,
         'invitedPlayers': invitedPlayers,
-        'maxPlayers': maxPlayers
+        'usersMax': usersMax
       };
 
   @override

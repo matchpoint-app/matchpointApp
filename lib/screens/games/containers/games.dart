@@ -14,8 +14,12 @@ class _GamesContainerState extends State<GamesContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-            AppBar(title: Text(FlutterI18n.translate(context, 'games.games'))),
+        appBar: AppBar(
+          title: Center(
+              child: Text(FlutterI18n.translate(context, 'games.games'))),
+          backgroundColor: Color.fromRGBO(43, 59, 67, 1),
+        ),
+        backgroundColor: Color.fromRGBO(234, 234, 234, 1),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: floatingActionButton,
         body: GamesList());

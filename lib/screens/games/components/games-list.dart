@@ -1,21 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/screens/games/components/games-list-card.dart';
 
 class GamesList extends StatelessWidget {
-  final List<Game> list = List<Game>.generate(
-      10,
-      (i) => new Game(
-          id: '$i',
-          title: 'Game ${i + 1}',
-          location: new Location(),
-          time: DateTime.now(),
-          players: [
-            {'userId': 1},
-            {'userId': 2}
-          ],
-          maxPlayers: 4));
 
   void onListItemClick(BuildContext ctx) {
     Navigator.push(
@@ -23,18 +12,27 @@ class GamesList extends StatelessWidget {
         new MaterialPageRoute(
             builder: (ctx) => Scaffold(
                 appBar: AppBar(
+                  backgroundColor: Color.fromRGBO(43, 59, 67, 1),
                   title: Text("TO DO"),
                 ),
+                backgroundColor: Color.fromRGBO(234, 234, 234, 1),
                 body: Center(child: Text("TEST"))),
             fullscreenDialog: true));
   }
 
   @override
   Widget build(BuildContext ctx) {
-    return ListView(
-        children: list
-            .map((game) => GestureDetector(
-                onTap: () => onListItemClick(ctx), child: GamesListCard(game)))
-            .toList());
+    return StreamBuilder(
+      stream: Firestore.instance.collection('games').snapshots(),
+      builder: (ctx, snapshot) {
+        if(!snapshot.hasData) return const Text('Loading...');
+        return ListView.builder(
+          itemCount: snapshot.data.documents.length,
+          itemBuilder: (ctx, index) {
+            return GamesListCard(Game.fromJson(snapshot.data.documents[index].data));
+          },
+        );
+      }
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:matchpoint/models/game.dart';
 
 class GamesListCard extends StatelessWidget {
@@ -9,7 +10,8 @@ class GamesListCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return Card(
-      margin: EdgeInsets.all(12),
+      color: Color.fromRGBO(234, 234, 234, 1),
+      margin: EdgeInsets.all(10),
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
@@ -29,7 +31,8 @@ class GamesListCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.calendar_today)),
                       Text(
-                        game.time.toString(),
+                        DateFormat("dd-MM hh:mm").format(game.time.toDate()),
+                        style: TextStyle(fontSize: 14),
                       )
                     ])),
                 Padding(
@@ -39,7 +42,7 @@ class GamesListCard extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.add_location)),
                       Text(
-                        game.location.toString(),
+                        game.location.name,
                       )
                     ])),
               ],
@@ -55,7 +58,7 @@ class GamesListCard extends StatelessWidget {
                       color: Colors.deepOrange,
                       style: BorderStyle.solid)),
               child: Center(
-                  child: Text("${game.players.length}/${game.maxPlayers}")),
+                  child: Text("${game.players.length}/${game.usersMax}")),
             ),
           ],
         ),

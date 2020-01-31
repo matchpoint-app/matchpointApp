@@ -5,5 +5,4 @@ abstract class Routes {
 
   static const String Games = "/games";
   static const String Chat = "/chat";
-  static const String Profile = "/profile";
 }
