@@ -21,6 +21,9 @@ void main() => runApp(MaterialApp(
         Locale('en'),
         Locale('sv'),
       ],
+      theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+          primaryIconTheme: IconThemeData(color: Colors.black)),
       home: MatchpointApp(),
       routes: <String, WidgetBuilder>{
         Routes.Login: (BuildContext context) => Login(),

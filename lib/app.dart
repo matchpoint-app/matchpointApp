@@ -2,46 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
 import 'package:matchpoint/screens/profile/profile.dart';
+import 'package:matchpoint/screens/social/social.dart';
 
-class MatchpointApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Matchpoint',
-      theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryIconTheme: IconThemeData(color: Colors.black)),
-      home: AppContainer(title: 'MatchpointApp'),
-    );
-  }
-}
-
-class AppContainer extends StatefulWidget {
-  AppContainer({Key key, this.title}) : super(key: key);
+class MatchpointApp extends StatefulWidget {
+  MatchpointApp({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _AppContainerState createState() => _AppContainerState();
+  _MatchpointAppState createState() => _MatchpointAppState();
 }
 
 PageController pageController;
 
-class _AppContainerState extends State<AppContainer> {
+class _MatchpointAppState extends State<MatchpointApp> {
   int _page = 0;
+
+  final List<Widget> mainNavigation = [
+    Container(
+      child: HomeContainer(),
+    ),
+    Container(child: GamesContainer()),
+    Container(child: Social()),
+    Container(child: Profile()),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: [
-          Container(
-            child: HomeContainer(),
-          ),
-          Container(child: GamesContainer()),
-          Container(child: GamesContainer()),
-          Container(child: Profile()),
-        ],
+        children: mainNavigation,
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
@@ -81,9 +70,8 @@ class _AppContainerState extends State<AppContainer> {
   }
 
   void onPageChanged(int page) {
-    setState(() {
-      this._page = page;
-    });
+    assert(page >= 0 && page < mainNavigation.length);
+    setState(() => this._page = page);
   }
 
   @override
