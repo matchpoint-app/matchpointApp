@@ -151,7 +151,7 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get cardDescription {
     return Card(
-        margin: EdgeInsets.all(12),
+        margin: EdgeInsets.all(10),
         elevation: 4,
         child: Container(
             padding: EdgeInsets.fromLTRB(12, 0, 12, 12),

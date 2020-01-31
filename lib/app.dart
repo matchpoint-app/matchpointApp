@@ -10,8 +10,21 @@ class MatchpointApp extends StatelessWidget {
     return MaterialApp(
       title: 'Matchpoint',
       theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryIconTheme: IconThemeData(color: Colors.black)),
+          primaryColor: Color.fromRGBO(43, 59, 67, 1),
+          scaffoldBackgroundColor: Color.fromRGBO(234, 234, 234, 1),
+          primaryTextTheme: TextTheme(
+            title: TextStyle(color: Color.fromRGBO(234, 234, 234, 1))
+          ),
+          textTheme: TextTheme(
+            body1: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
+            body2: TextStyle(color: Color.fromRGBO(43, 59, 67, 1))
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Color.fromRGBO(221, 110, 66, 1),
+            foregroundColor: Color.fromRGBO(234, 234, 234, 1)
+          ),
+          iconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1)),
+          primaryIconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1))),
       home: AppContainer(title: 'MatchpointApp'),
     );
   }

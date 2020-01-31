@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/screens/games/components/games-list-card.dart';
+import 'package:matchpoint/ui/loading-indicator.dart';
 
 class GamesList extends StatelessWidget {
 
@@ -25,7 +26,7 @@ class GamesList extends StatelessWidget {
     return StreamBuilder(
       stream: Firestore.instance.collection('games').snapshots(),
       builder: (ctx, snapshot) {
-        if(!snapshot.hasData) return const Text('Loading...');
+        if(!snapshot.hasData) return Center(child: LoadingIndicator());
         return ListView.builder(
           itemCount: snapshot.data.documents.length,
           itemBuilder: (ctx, index) {

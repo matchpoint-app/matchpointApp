@@ -55,7 +55,7 @@ class GamesListCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(40),
                   border: Border.all(
                       width: 2,
-                      color: Colors.deepOrange,
+                      color: Color.fromRGBO(221, 110, 66, 1),
                       style: BorderStyle.solid)),
               child: Center(
                   child: Text("${game.players.length}/${game.usersMax}")),

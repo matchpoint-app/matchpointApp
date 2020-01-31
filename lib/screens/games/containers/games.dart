@@ -16,9 +16,7 @@ class _GamesContainerState extends State<GamesContainer> {
     return Scaffold(
         appBar: AppBar(
           title: Center(child: Text("Games")),
-          backgroundColor: Color.fromRGBO(43, 59, 67, 1),
         ),
-        backgroundColor: Color.fromRGBO(234, 234, 234, 1),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),

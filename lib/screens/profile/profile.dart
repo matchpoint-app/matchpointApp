@@ -1,12 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/game.dart';
-import 'package:matchpoint/models/location.dart';
-import 'package:matchpoint/services/eventDatabase.dart';
-import 'package:matchpoint/ui/user-list-item.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -23,15 +16,13 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text('Profile'),
         centerTitle: true,
-        backgroundColor: Color.fromRGBO(43, 59, 67, 1),
       ),
-      backgroundColor: Color.fromRGBO(234, 234, 234, 1),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Card(
               color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(12),
+              margin: EdgeInsets.all(10),
               elevation: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +36,7 @@ class _ProfileState extends State<Profile> {
               )),
           Card(
               color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(12),
+              margin: EdgeInsets.all(10),
               elevation: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +45,7 @@ class _ProfileState extends State<Profile> {
               )),
           Card(
               color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(12),
+              margin: EdgeInsets.all(10),
               elevation: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +108,6 @@ class _ProfileState extends State<Profile> {
       children: <Widget>[
         Icon(
           Icons.star,
-          color: Colors.orange,
           size: 16,
         ),
         SizedBox(width: 10),
@@ -131,7 +121,6 @@ class _ProfileState extends State<Profile> {
       children: <Widget>[
         Icon(
           Icons.group,
-          color: Colors.orange,
           size: 16,
         ),
         SizedBox(width: 10),
@@ -145,7 +134,6 @@ class _ProfileState extends State<Profile> {
       children: <Widget>[
         Icon(
           Icons.location_on,
-          color: Colors.orange,
           size: 16,
         ),
         SizedBox(width: 10),
