@@ -38,7 +38,7 @@ class _CreateGameState extends State<CreateGame> {
           {'userId': 1},
           {'userId': 2}
         ],
-        usersMax: 4);
+        maxPlayers: 4);
 
     EventDatabaseService().updateEvent(game);
 

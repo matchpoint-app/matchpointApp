@@ -15,7 +15,7 @@ class GamesList extends StatelessWidget {
             {'userId': 1},
             {'userId': 2}
           ],
-          usersMax: 4));
+          maxPlayers: 4));
 
   void onListItemClick(BuildContext ctx) {
     Navigator.push(
