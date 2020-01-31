@@ -40,12 +40,12 @@ class _SocialContainerState extends State<SocialContainer> {
           Expanded(
               child: ListView.builder(
             itemCount: 20,
-            itemBuilder: _buildFriendListTile,
+            itemBuilder: _buildListCard,
           ))
         ]));
   }
 
-  Widget _buildFriendListTile(BuildContext context, int index) {
+  Widget _buildListCard(BuildContext context, int index) {
     return SocialCardItem(
       tag: index.toString(),
       title: "johnny",
@@ -66,18 +66,3 @@ class _SocialContainerState extends State<SocialContainer> {
     super.dispose();
   }
 }
-/*
-    ListView.builder(
-                itemCount: 10,
-                itemBuilder: _buildFriendListTile,
-              )
-    
-    Padding(
-            padding: EdgeInsets.all(12),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SocialSearch(searchControl),
-                ListView(children: <Widget>[])
-              ],
-            )))*/
