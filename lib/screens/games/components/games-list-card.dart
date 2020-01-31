@@ -10,7 +10,8 @@ class GamesListCard extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return Card(
-      margin: EdgeInsets.all(12),
+      color: Color.fromRGBO(234, 234, 234, 1),
+      margin: EdgeInsets.all(10),
       elevation: 4,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),

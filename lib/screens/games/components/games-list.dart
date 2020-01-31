@@ -12,8 +12,10 @@ class GamesList extends StatelessWidget {
         new MaterialPageRoute(
             builder: (ctx) => Scaffold(
                 appBar: AppBar(
+                  backgroundColor: Color.fromRGBO(43, 59, 67, 1),
                   title: Text("TO DO"),
                 ),
+                backgroundColor: Color.fromRGBO(234, 234, 234, 1),
                 body: Center(child: Text("TEST"))),
             fullscreenDialog: true));
   }
