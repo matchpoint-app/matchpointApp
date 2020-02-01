@@ -51,6 +51,7 @@ class Message extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               chat.author,
+              style: TextStyle(color: Colors.black38),
             )),
         Container(
           alignment: Alignment.centerLeft,
