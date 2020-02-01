@@ -9,7 +9,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
     as location_picker;
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
-import 'package:matchpoint/screens/social/components/chat.dart';
+import 'package:matchpoint/screens/social/containers/chat.dart';
 
 void main() => runApp(MaterialApp(
       localizationsDelegates: [
@@ -42,6 +42,6 @@ void main() => runApp(MaterialApp(
         Routes.Register: (BuildContext context) => Register(),
         Routes.Home: (BuildContext context) => HomeContainer(),
         Routes.Games: (BuildContext context) => GamesContainer(),
-        Routes.Chat: (BuildContext context) => Chat()
+        Routes.Chat: (BuildContext context) => ChatContainer()
       },
     ));

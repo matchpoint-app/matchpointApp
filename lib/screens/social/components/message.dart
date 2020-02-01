@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:matchpoint/screens/social/components/chat.dart';
+import 'package:matchpoint/screens/social/containers/chat.dart';
 
 class Message extends StatelessWidget {
   const Message({Key key, @required this.chat}) : super(key: key);
