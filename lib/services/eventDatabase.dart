@@ -7,7 +7,7 @@ class EventDatabaseService {
 
   Future updateEvent(
       Game game) async {
-    return await gamesCollection.document(game.title + '_' + game.time.toString()).setData(
+    return await gamesCollection.document(game.id).setData(
       game.toJson()
     );
   }

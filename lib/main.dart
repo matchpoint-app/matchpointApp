@@ -17,6 +17,7 @@ void main() => runApp(MaterialApp(
         FlutterI18nDelegate(path: 'assets/i18n', forcedLocale: Locale('en')),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const <Locale>[
         Locale('en'),
@@ -24,12 +25,20 @@ void main() => runApp(MaterialApp(
       ],
       theme: ThemeData(
           primaryColor: Color.fromRGBO(43, 59, 67, 1),
+          appBarTheme: AppBarTheme(
+              iconTheme: IconThemeData(color: Color.fromRGBO(234, 234, 234, 1)),
+              actionsIconTheme:
+                  IconThemeData(color: Color.fromRGBO(234, 234, 234, 1))),
           scaffoldBackgroundColor: Color.fromRGBO(234, 234, 234, 1),
           primaryTextTheme: TextTheme(
-              title: TextStyle(color: Color.fromRGBO(234, 234, 234, 1))),
+            title: TextStyle(color: Color.fromRGBO(234, 234, 234, 1)),
+            subhead: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
+          ),
           textTheme: TextTheme(
-              body1: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
-              body2: TextStyle(color: Color.fromRGBO(43, 59, 67, 1))),
+            body1: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
+            body2: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
+            subhead: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
+          ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
               backgroundColor: Color.fromRGBO(221, 110, 66, 1),
               foregroundColor: Color.fromRGBO(234, 234, 234, 1)),
