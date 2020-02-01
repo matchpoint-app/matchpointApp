@@ -22,7 +22,7 @@ class ChatInput extends StatelessWidget {
           Flexible(
             child: Container(
               child: TextField(
-                style: TextStyle(color: Colors.red, fontSize: 15.0),
+                style: TextStyle(color: Colors.black, fontSize: 15.0),
                 controller: controller,
                 onSubmitted: this.onSendMessage,
                 decoration: InputDecoration.collapsed(
@@ -38,7 +38,7 @@ class ChatInput extends StatelessWidget {
             child: IconButton(
               icon: Icon(Icons.send),
               onPressed: () => onSendMessage(controller.text),
-              color: Colors.blue,
+              color: Color.fromRGBO(221, 110, 66, 1),
             ),
           ),
         ],
@@ -46,7 +46,7 @@ class ChatInput extends StatelessWidget {
       width: double.infinity,
       height: 50.0,
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.green, width: 0.5)),
+          border: Border(top: BorderSide(color: Colors.black, width: 0.5)),
           color: Colors.white),
     );
   }
