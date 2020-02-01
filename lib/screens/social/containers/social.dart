@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/social/components/search.dart';
 import 'package:matchpoint/screens/social/components/social-card-item.dart';
 
@@ -22,7 +23,12 @@ class _SocialContainerState extends State<SocialContainer> {
     });
   }
 
+  void _onSearchClear() {
+    searchControl.clear();
+  }
+
   void _onChatSelect() {
+    Navigator.of(context).pushNamed(Routes.Chat);
     print("click friend");
   }
 
@@ -36,7 +42,7 @@ class _SocialContainerState extends State<SocialContainer> {
           Padding(padding: EdgeInsets.only(top: 20)),
           Padding(
               padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
-              child: SocialSearch(searchControl)),
+              child: SocialSearch(searchControl, this._onSearchClear)),
           Expanded(
               child: ListView.builder(
             itemCount: 20,
