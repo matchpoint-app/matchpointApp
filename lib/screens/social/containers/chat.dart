@@ -21,9 +21,11 @@ class _ChatContainerState extends State<ChatContainer> {
 
   List<ChatMessage> items = [
     ChatMessage(
-        author: 'Johnny', message: 'Hello to our chat', isReceived: true),
-    ChatMessage(author: 'Birgit', message: '<3 play boll', isReceived: false),
+        author: 'Johnny Bregottsson',
+        message: 'Hello to our chat',
+        isReceived: true),
     ChatMessage(author: 'Larsa', message: '😊', isReceived: true),
+    ChatMessage(author: 'Birgit', message: '<3 play boll', isReceived: false),
     ChatMessage(
         author: 'Sven', message: 'äger er alla haha\nny rad', isReceived: true),
   ];

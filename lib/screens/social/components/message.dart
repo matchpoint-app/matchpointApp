@@ -44,37 +44,47 @@ class Message extends StatelessWidget {
   }
 
   Widget _buildReceivedMessage(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: <Widget>[
-          chat.isReceived
-              ? Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CircleAvatar(
-                    // backgroundImage: NetworkImage(),
-                    radius: 12.0,
-                  ),
-                )
-              : Container(
-                  width: 32.0,
-                  height: 24.0,
-                ),
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 3 / 4),
-            padding: EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              color: Colors.white54,
-              borderRadius: BorderRadius.circular(25.0),
-            ),
+    return Column(
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.fromLTRB(40, 0, 0, 6),
+            alignment: Alignment.centerLeft,
             child: Text(
-              chat.message,
-              style: TextStyle(fontSize: 18.0, color: Colors.black),
-            ),
+              chat.author,
+            )),
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: <Widget>[
+              chat.isReceived
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: CircleAvatar(
+                        // backgroundImage: NetworkImage(),
+                        radius: 12.0,
+                      ),
+                    )
+                  : Container(
+                      width: 32.0,
+                      height: 24.0,
+                    ),
+              Container(
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 3 / 4),
+                padding: EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white54,
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                child: Text(
+                  chat.message,
+                  style: TextStyle(fontSize: 18.0, color: Colors.black),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
