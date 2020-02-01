@@ -9,6 +9,7 @@ import 'package:google_map_location_picker/generated/i18n.dart'
     as location_picker;
 import 'package:matchpoint/screens/games/containers/games.dart';
 import 'package:matchpoint/screens/home/containers/home.dart';
+import 'package:matchpoint/screens/social/containers/chat.dart';
 
 void main() => runApp(MaterialApp(
       localizationsDelegates: [
@@ -22,16 +23,12 @@ void main() => runApp(MaterialApp(
         Locale('en'),
         Locale('sv'),
       ],
-     theme: ThemeData(
+      theme: ThemeData(
           primaryColor: Color.fromRGBO(43, 59, 67, 1),
           appBarTheme: AppBarTheme(
-            iconTheme: IconThemeData(
-              color: Color.fromRGBO(234, 234, 234, 1)
-            ),
-            actionsIconTheme: IconThemeData(
-              color: Color.fromRGBO(234, 234, 234, 1)
-            )
-          ),
+              iconTheme: IconThemeData(color: Color.fromRGBO(234, 234, 234, 1)),
+              actionsIconTheme:
+                  IconThemeData(color: Color.fromRGBO(234, 234, 234, 1))),
           scaffoldBackgroundColor: Color.fromRGBO(234, 234, 234, 1),
           primaryTextTheme: TextTheme(
             title: TextStyle(color: Color.fromRGBO(234, 234, 234, 1)),
@@ -43,16 +40,17 @@ void main() => runApp(MaterialApp(
             subhead: TextStyle(color: Color.fromRGBO(43, 59, 67, 1)),
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-            backgroundColor: Color.fromRGBO(221, 110, 66, 1),
-            foregroundColor: Color.fromRGBO(234, 234, 234, 1)
-          ),
+              backgroundColor: Color.fromRGBO(221, 110, 66, 1),
+              foregroundColor: Color.fromRGBO(234, 234, 234, 1)),
           iconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1)),
-          primaryIconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1))),
+          primaryIconTheme:
+              IconThemeData(color: Color.fromRGBO(221, 110, 66, 1))),
       home: MatchpointApp(),
       routes: <String, WidgetBuilder>{
         Routes.Login: (BuildContext context) => Login(),
         Routes.Register: (BuildContext context) => Register(),
         Routes.Home: (BuildContext context) => HomeContainer(),
-        Routes.Games: (BuildContext context) => GamesContainer()
+        Routes.Games: (BuildContext context) => GamesContainer(),
+        Routes.Chat: (BuildContext context) => ChatContainer()
       },
     ));
