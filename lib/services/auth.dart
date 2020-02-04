@@ -20,7 +20,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      final userInformation = UserDatabaseService(result.user.uid).getUser();
+      final userInformation = UserDatabaseService().getUser(result.user.uid);
 
       return userInformation;
     } catch (e) {
@@ -36,8 +36,8 @@ class AuthService {
       FirebaseUser user = result.user;
 
       final UserDatabaseService userDatabaseService =
-          UserDatabaseService(user.uid);
-      userDatabaseService.updateUser();
+          UserDatabaseService();
+      userDatabaseService.updateUser(user.uid, null);
       return user;
     } catch (e) {
       print(e.toString());

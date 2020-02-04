@@ -45,9 +45,11 @@ class _CreateGameState extends State<CreateGame> {
         skillLevel: _sliderValue,
         private: false,
         location: new Location(
-        name: _location.address != null ? _location.address : "Unknown address", 
-        latitude: _location.latLng.latitude, 
-        longitude: _location.latLng.longitude),
+            name: _location.address != null
+                ? _location.address
+                : "Unknown address",
+            latitude: _location.latLng.latitude,
+            longitude: _location.latLng.longitude),
         time: Timestamp.fromDate(_date),
         players: [
           {'userId': 1},
@@ -86,17 +88,19 @@ class _CreateGameState extends State<CreateGame> {
   @override
   Widget build(BuildContext ctx) {
     return Scaffold(
-        appBar:
-            AppBar(title: Text("Create event"), centerTitle: true, actions: <Widget>[
-          FlatButton(
-            textColor: Colors.white,
-            onPressed: () => _onDonePressed(ctx),
-            child: Text(
-              "Done",
-              style: TextStyle(fontSize: 16),
-            ),
-          )
-        ]),
+        appBar: AppBar(
+            title: Text("Create event"),
+            centerTitle: true,
+            actions: <Widget>[
+              FlatButton(
+                textColor: Colors.white,
+                onPressed: () => _onDonePressed(ctx),
+                child: Text(
+                  "Done",
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+            ]),
         body: ListView(children: <Widget>[
           Card(
               margin: EdgeInsets.all(10),
@@ -104,7 +108,14 @@ class _CreateGameState extends State<CreateGame> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[type, maxPlayers, date, location, skillText, slider],
+                children: <Widget>[
+                  type,
+                  maxPlayers,
+                  date,
+                  location,
+                  skillText,
+                  slider
+                ],
               )),
           cardGameDescription,
           friends,
@@ -113,22 +124,22 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get type {
     return ListTile(
-          title: Text('Sport'),
-                  trailing: DropdownButton<String>(
-            value: _selectedSport,
-            onChanged: (String newValue) {
-              setState(() {
-                _selectedSport = newValue;
-              });
-            },
-            items: _sports.map((sport) {
-              return DropdownMenuItem(
-                child: new Text(sport),
-                value: sport,
-              );
-            }).toList(),
-          ),
-        );
+      title: Text('Sport'),
+      trailing: DropdownButton<String>(
+        value: _selectedSport,
+        onChanged: (String newValue) {
+          setState(() {
+            _selectedSport = newValue;
+          });
+        },
+        items: _sports.map((sport) {
+          return DropdownMenuItem(
+            child: Container(padding: EdgeInsets.all(10), child: Text(sport)),
+            value: sport,
+          );
+        }).toList(),
+      ),
+    );
   }
 
   Widget get date {
@@ -141,13 +152,18 @@ class _CreateGameState extends State<CreateGame> {
   }
 
   Widget get location {
-    return ListTile(
-      leading: Icon(Icons.add_location, color: Color.fromRGBO(221, 110, 66, 1)),
-      title: _location.address != null ? Text(_location.address) : Text("Select location"),
-      onTap: () async {
-        _location = await showLocationPicker(
-            context, "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU");
-      },
+    return Container(
+      width: 400,
+      child: ListTile(
+        leading: Icon(Icons.add_location, color: Color.fromRGBO(221, 110, 66, 1)),
+        title: (_location != null && _location.address != null)
+            ? Text(_location.address, overflow: TextOverflow.ellipsis)
+            : Text("Select location"),
+        onTap: () async {
+          _location = await showLocationPicker(
+              context, "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU");
+        },
+      ),
     );
   }
 
@@ -176,48 +192,47 @@ class _CreateGameState extends State<CreateGame> {
         });
   }
 
-   Widget get maxPlayers {
+  Widget get maxPlayers {
     return ListTile(
-          title: Text('Max players'),
-                  trailing: DropdownButton<int>(
-            value: _selectedMaxPlayers,
-            onChanged: (int newValue) {
-              setState(() {
-                _selectedMaxPlayers = newValue;
-              });
-            },
-            items: _maxPlayers.map((maxPlayer) {
-              return DropdownMenuItem(
-                child: new Text(maxPlayer.toString()),
-                value: maxPlayer,
-              );
-            }).toList(),
-          ),
-        );
+      title: Text('Max players'),
+      trailing: DropdownButton<int>(
+        value: _selectedMaxPlayers,
+        onChanged: (int newValue) {
+          setState(() {
+            _selectedMaxPlayers = newValue;
+          });
+        },
+        items: _maxPlayers.map((maxPlayer) {
+          return DropdownMenuItem(
+            child: new Text(maxPlayer.toString()),
+            value: maxPlayer,
+          );
+        }).toList(),
+      ),
+    );
   }
 
   Widget get cardGameDescription {
     return Card(
-        margin: EdgeInsets.all(10),
-        elevation: 4,
-        child: Column(
-                children: <Widget>[
-                   Container(
-                     padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                     child: TextFormField(
-                       controller: titleController,
-                          maxLines: 1,
-                          decoration: InputDecoration(labelText: "Title")),
-                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-                    child: TextFormField(
-                      controller: descriptionController,
-                          maxLines: 2,
-                          decoration: InputDecoration(labelText: "Description")),
-                  ),
-                ]),
-        );
+      margin: EdgeInsets.all(10),
+      elevation: 4,
+      child: Column(children: <Widget>[
+        Container(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: TextFormField(
+              controller: titleController,
+              maxLines: 1,
+              decoration: InputDecoration(labelText: "Title")),
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: TextFormField(
+              controller: descriptionController,
+              maxLines: 2,
+              decoration: InputDecoration(labelText: "Description")),
+        ),
+      ]),
+    );
   }
 
   Widget get friends {

@@ -45,10 +45,11 @@ void main() => runApp(MaterialApp(
           iconTheme: IconThemeData(color: Color.fromRGBO(221, 110, 66, 1)),
           primaryIconTheme:
               IconThemeData(color: Color.fromRGBO(221, 110, 66, 1))),
-      home: MatchpointApp(),
+      home: Login(),
       routes: <String, WidgetBuilder>{
         Routes.Login: (BuildContext context) => Login(),
         Routes.Register: (BuildContext context) => Register(),
+        Routes.App: (BuildContext context) => MatchpointApp(),
         Routes.Home: (BuildContext context) => HomeContainer(),
         Routes.Games: (BuildContext context) => GamesContainer(),
         Routes.Chat: (BuildContext context) => ChatContainer()

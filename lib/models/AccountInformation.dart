@@ -1,15 +1,17 @@
 class AccountInformation {
-  final String id;
-  final String userName;
-  final String location;
-  final double rating;
-  final Map<String, double> sports;
-  final List<String> groups;
-  final List<String> friends;
+  String id;
+  String name;
+  String description;
+  String location;
+  double rating;
+  List<Map<String, double>> sports;
+  List<String> groups;
+  List<String> friends;
 
   AccountInformation(
       {this.id,
-      this.userName,
+      this.name,
+      this.description,
       this.location,
       this.rating,
       this.sports,
@@ -19,7 +21,8 @@ class AccountInformation {
   factory AccountInformation.fromJson(dynamic json) {
     return AccountInformation(
         id: json['id'] as String,
-        userName: json['userName'] as String,
+        name: json['name'] as String,
+        description: json['description'] as String,
         location: json['location'] as String,
         rating: json['rating'] as double,
         sports: json['sports'] as dynamic,
@@ -29,7 +32,8 @@ class AccountInformation {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'userName': userName,
+        'name': name,
+        'description': description,
         'location': location,
         'rating': rating,
         'sports': sports,

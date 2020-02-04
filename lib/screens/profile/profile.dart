@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:matchpoint/globals.dart' as globals;
+import 'package:matchpoint/services/userDatabase.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -9,6 +14,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  Prediction p;
 
   @override
   Widget build(BuildContext context) {
@@ -17,69 +23,156 @@ class _ProfileState extends State<Profile> {
         title: Text('Profile'),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Card(
-              color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(10),
-              elevation: 6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  name,
-                  Row(
-                    children: <Widget>[picture, profileInformation],
-                  )
-                ],
-              )),
-          Card(
-              color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(10),
-              elevation: 6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[descriptionTitle, description],
-              )),
-          Card(
-              color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(10),
-              elevation: 6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[sportsHeader],
-              )),
-        ],
-      ),
+      body: ListView(children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Card(
+                color: Color.fromRGBO(234, 234, 234, 1),
+                margin: EdgeInsets.all(10),
+                elevation: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    name,
+                    Row(
+                      children: <Widget>[picture, profileInformation],
+                    )
+                  ],
+                )),
+            Card(
+                color: Color.fromRGBO(234, 234, 234, 1),
+                margin: EdgeInsets.all(10),
+                elevation: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[descriptionTitle, description],
+                )),
+            Card(
+                color: Color.fromRGBO(234, 234, 234, 1),
+                margin: EdgeInsets.all(10),
+                elevation: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[sportsHeader],
+                )),
+          ],
+        ),
+      ]),
     );
   }
 
   Widget get name {
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: Text('John Linder',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      child: ListTile(
+        title: Text(
+            globals.userInformation.name != null
+                ? globals.userInformation.name
+                : '',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        trailing: IconButton(
+          icon: Icon(Icons.edit, color: Colors.grey[700]),
+          onPressed: () => {_displayNameInputDialog(context)},
+        ),
+      ),
     );
+  }
+
+  _displayNameInputDialog(BuildContext context) async {
+    TextEditingController _textFieldController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            title: Text('Enter your name'),
+            content: TextField(
+              controller: _textFieldController,
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('Ok'),
+                onPressed: () {
+                  setState(() {
+                    globals.userInformation.name = _textFieldController.text;
+                  });
+                  UserDatabaseService().updateUser(
+                      globals.userInformation.id, globals.userInformation);
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   Widget get descriptionTitle {
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
-      child: Text('About John',
+      child: Text('About ${globals.userInformation.name}',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
     );
   }
 
   Widget get description {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-      child: Text(
-          'Hej, jag heter John och jag gillar att spela fotboll om dagarna.',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal)),
+    return ListTile(
+      title: Text(
+          globals.userInformation.description != null
+              ? globals.userInformation.description
+              : '',
+          style: TextStyle(fontSize: 16)),
+      trailing: IconButton(
+        icon: Icon(Icons.edit, color: Colors.grey[700]),
+        onPressed: () => {_displayDescriptionInputDialog(context)},
+      ),
     );
+  }
+
+  _displayDescriptionInputDialog(BuildContext context) async {
+    TextEditingController _textFieldController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.all(10),
+            title: Text('Enter your description'),
+            content: TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              controller: _textFieldController,
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('Ok'),
+                onPressed: () {
+                  setState(() {
+                    globals.userInformation.description =
+                        _textFieldController.text;
+                  });
+                  UserDatabaseService().updateUser(
+                      globals.userInformation.id, globals.userInformation);
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 
   Widget get picture {
@@ -130,6 +223,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget get location {
+    var list = ['locality'];
     return Row(
       children: <Widget>[
         Icon(
@@ -137,7 +231,25 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text('Stockholm, Sweden')
+        Text('Stockholm, Sweden'),
+        SizedBox(width: 30),
+        IconButton(
+          icon: Icon(
+            Icons.edit,
+            size: 16,
+            color: Colors.grey[700],
+          ),
+          onPressed: () async => {
+            p = await PlacesAutocomplete.show(
+                context: context,
+                apiKey: "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
+            // _location = await showLocationPicker(
+            //   context, "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
+            globals.userInformation.location = p.description != null
+                ? p.description
+                : "Unknown address"
+          },
+        ),
       ],
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:matchpoint/models/AccountInformation.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth.dart';
+import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
+import 'package:matchpoint/globals.dart' as globals;
 
 class Login extends StatefulWidget {
   Login();
@@ -35,7 +38,9 @@ class _LoginState extends State<Login> {
       print('error');
       print(result);
     } else {
-      Navigator.of(context).pushReplacementNamed(Routes.Home);
+      var userAsObject = AccountInformation.fromJson(result.data);
+      globals.userInformation = userAsObject;
+      Navigator.of(context).pushReplacementNamed(Routes.App);
     }
   }
 

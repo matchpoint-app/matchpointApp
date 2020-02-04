@@ -41,8 +41,12 @@ class GamesListCard extends StatelessWidget {
                       Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 6, 0),
                           child: Icon(Icons.add_location)),
-                      Text(
-                        game.location.name,
+                      Container(
+                        width: 250,
+                        child: Text(
+                          game.location.name,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       )
                     ])),
               ],
