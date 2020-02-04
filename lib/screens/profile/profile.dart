@@ -223,7 +223,6 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget get location {
-    var list = ['locality'];
     return Row(
       children: <Widget>[
         Icon(
@@ -231,8 +230,7 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text('Stockholm, Sweden'),
-        SizedBox(width: 30),
+        Text(globals.userInformation.location),
         IconButton(
           icon: Icon(
             Icons.edit,
@@ -241,13 +239,18 @@ class _ProfileState extends State<Profile> {
           ),
           onPressed: () async => {
             p = await PlacesAutocomplete.show(
+                mode: Mode.fullscreen,
                 context: context,
                 apiKey: "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
             // _location = await showLocationPicker(
             //   context, "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
-            globals.userInformation.location = p.description != null
-                ? p.description
-                : "Unknown address"
+            setState(() {
+              globals.userInformation.location =
+                  p.description != null ? p.description : "Unknown address";
+            }),
+
+            UserDatabaseService()
+                .updateUser(globals.userInformation.id, globals.userInformation)
           },
         ),
       ],
