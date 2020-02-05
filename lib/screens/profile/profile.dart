@@ -66,9 +66,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget get name {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
-      child: ListTile(
+    return ListTile(
         title: Text(
             globals.userInformation.name != null
                 ? globals.userInformation.name
@@ -78,7 +76,6 @@ class _ProfileState extends State<Profile> {
           icon: Icon(Icons.edit, color: Colors.grey[700]),
           onPressed: () => {_displayNameInputDialog(context)},
         ),
-      ),
     );
   }
 
@@ -139,7 +136,7 @@ class _ProfileState extends State<Profile> {
   }
 
   _displayDescriptionInputDialog(BuildContext context) async {
-    TextEditingController _textFieldController = TextEditingController();
+    TextEditingController _textFieldController = TextEditingController(text: globals.userInformation.description);
     return showDialog(
         context: context,
         builder: (context) {
@@ -148,7 +145,8 @@ class _ProfileState extends State<Profile> {
             title: Text('Enter your description'),
             content: TextField(
               keyboardType: TextInputType.multiline,
-              maxLines: null,
+              minLines: 1,
+              maxLines: 5,
               controller: _textFieldController,
             ),
             actions: <Widget>[
@@ -217,7 +215,7 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text('57')
+        Text(globals.userInformation.friends != null ? globals.userInformation.friends.length.toString() : "0")
       ],
     );
   }
@@ -231,27 +229,30 @@ class _ProfileState extends State<Profile> {
         ),
         SizedBox(width: 10),
         Text(globals.userInformation.location),
-        IconButton(
-          icon: Icon(
-            Icons.edit,
-            size: 16,
-            color: Colors.grey[700],
-          ),
-          onPressed: () async => {
-            p = await PlacesAutocomplete.show(
-                mode: Mode.fullscreen,
-                context: context,
-                apiKey: "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
-            // _location = await showLocationPicker(
-            //   context, "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
-            setState(() {
-              globals.userInformation.location =
-                  p.description != null ? p.description : "Unknown address";
-            }),
+        SizedBox(width: 10),
+        Container(
+          width: 20,
+          height: 20,
+          child: IconButton(
+            padding: EdgeInsets.all(0),
+            icon: Icon(
+              Icons.edit,
+              size: 16,
+              color: Colors.grey[700],
+            ),
+            onPressed: () async => {
+              p = await PlacesAutocomplete.show(
+                  context: context,
+                  apiKey: "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
+              setState(() {
+                globals.userInformation.location =
+                    p.description != null ? p.description : "Unknown address";
+              }),
 
-            UserDatabaseService()
-                .updateUser(globals.userInformation.id, globals.userInformation)
-          },
+              UserDatabaseService()
+                  .updateUser(globals.userInformation.id, globals.userInformation)
+            },
+          ),
         ),
       ],
     );

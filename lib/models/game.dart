@@ -8,6 +8,7 @@ class Game {
   final String type;
   final Location location;
   final Timestamp time;
+  final String owner;
   final List<dynamic> players;
   final List<dynamic> invitedPlayers;
   final int usersMax;
@@ -21,6 +22,7 @@ class Game {
       this.type,
       this.location,
       this.time,
+      this.owner,
       this.players,
       this.invitedPlayers,
       this.usersMax,
@@ -35,6 +37,7 @@ class Game {
         type: json['type'] as String,
         location: Location.fromJson(json['location']),
         time: json['time'] as Timestamp,
+        owner: json['owner'] as String,
         players: json['players'] as dynamic,
         invitedPlayers: json['invitedPlayers'] as dynamic,
         usersMax: json['usersMax'] as int,
@@ -49,6 +52,7 @@ class Game {
         'type': type,
         'location': location.toJson(),
         'time': time,
+        'owner': owner,
         'players': players,
         'invitedPlayers': invitedPlayers,
         'usersMax': usersMax,

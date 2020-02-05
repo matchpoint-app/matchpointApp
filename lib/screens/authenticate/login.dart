@@ -4,6 +4,7 @@ import 'package:matchpoint/models/AccountInformation.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth.dart';
+import 'package:matchpoint/services/eventDatabase.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:matchpoint/globals.dart' as globals;

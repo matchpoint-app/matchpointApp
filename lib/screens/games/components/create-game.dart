@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
+import 'package:matchpoint/models/sport.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
+import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'package:matchpoint/globals.dart' as globals;
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key key, this.pageTitle}) : super(key: key);
@@ -21,9 +24,9 @@ class _CreateGameState extends State<CreateGame> {
   double _sliderValue = 1;
   DateTime _date;
   LocationResult _location;
-  List<String> _sports = ['Tennis', 'Football', 'Running', 'Golf'];
+  //List<String> _sports = ['Tennis', 'Football', 'Running', 'Golf'];
   String _selectedSport;
-  List<int> _maxPlayers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  int _maxPlayers = 20;
   int _selectedMaxPlayers;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -51,10 +54,9 @@ class _CreateGameState extends State<CreateGame> {
             latitude: _location.latLng.latitude,
             longitude: _location.latLng.longitude),
         time: Timestamp.fromDate(_date),
-        players: [
-          {'userId': 1},
-          {'userId': 2}
-        ],
+        owner: globals.userInformation.id,
+        players: ['1', '2'],
+        invitedPlayers: [],
         usersMax: _selectedMaxPlayers);
 
     EventDatabaseService().updateEvent(game);
@@ -124,21 +126,31 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get type {
     return ListTile(
-      title: Text('Sport'),
-      trailing: DropdownButton<String>(
-        value: _selectedSport,
-        onChanged: (String newValue) {
-          setState(() {
-            _selectedSport = newValue;
-          });
-        },
-        items: _sports.map((sport) {
-          return DropdownMenuItem(
-            child: Container(padding: EdgeInsets.all(10), child: Text(sport)),
-            value: sport,
-          );
-        }).toList(),
-      ),
+      leading: Text("Sport"),
+      trailing: Container(
+        margin: EdgeInsets.all(8),
+          child: StreamBuilder(
+              stream: Firestore.instance.collection("sports").snapshots(),
+              builder: (ctx, snapshot) {
+                if (snapshot == null || snapshot.data == null)
+                  return Text("Error");
+                return DropdownButton<String>(
+                    value: _selectedSport,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _selectedSport = newValue;
+                      });
+                    },
+                    items: snapshot.data.documents
+                        .map<DropdownMenuItem<String>>((sport) {
+                          var sportObject = Sport.fromJson(sport.data);
+                      return DropdownMenuItem<String>(
+                        child: Text(sportObject.name),
+                        value: sportObject.name,
+                      );
+                    }).toList(),
+                );
+              })),
     );
   }
 
@@ -155,7 +167,8 @@ class _CreateGameState extends State<CreateGame> {
     return Container(
       width: 400,
       child: ListTile(
-        leading: Icon(Icons.add_location, color: Color.fromRGBO(221, 110, 66, 1)),
+        leading:
+            Icon(Icons.add_location, color: Color.fromRGBO(221, 110, 66, 1)),
         title: (_location != null && _location.address != null)
             ? Text(_location.address, overflow: TextOverflow.ellipsis)
             : Text("Select location"),
@@ -195,21 +208,34 @@ class _CreateGameState extends State<CreateGame> {
   Widget get maxPlayers {
     return ListTile(
       title: Text('Max players'),
-      trailing: DropdownButton<int>(
-        value: _selectedMaxPlayers,
-        onChanged: (int newValue) {
-          setState(() {
-            _selectedMaxPlayers = newValue;
-          });
-        },
-        items: _maxPlayers.map((maxPlayer) {
-          return DropdownMenuItem(
-            child: new Text(maxPlayer.toString()),
-            value: maxPlayer,
-          );
-        }).toList(),
+      trailing: Container(
+        margin: EdgeInsets.all(8),
+        child: DropdownButton<int>(
+          value: _selectedMaxPlayers,
+          onChanged: (int newValue) {
+            setState(() {
+              _selectedMaxPlayers = newValue;
+            });
+          },
+          items: getMaxPlayerList()
+        ),
       ),
     );
+  }
+
+  getMaxPlayerList() {
+    List<DropdownMenuItem<int>> maxPlayerList = List<DropdownMenuItem<int>>();
+
+    for (var i = 1; i <= _maxPlayers; i++) {
+      maxPlayerList.add(DropdownMenuItem(
+        value: i,
+        child: Container(
+          padding: EdgeInsets.all(8),
+          child: Text(i.toString())),
+      ));
+    }
+
+    return maxPlayerList;
   }
 
   Widget get cardGameDescription {
