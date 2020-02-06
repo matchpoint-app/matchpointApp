@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:matchpoint/models/accountInformation.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/models/sport.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
+import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
@@ -24,7 +26,7 @@ class _CreateGameState extends State<CreateGame> {
   double _sliderValue = 1;
   DateTime _date;
   LocationResult _location;
-  //List<String> _sports = ['Tennis', 'Football', 'Running', 'Golf'];
+  List<AccountInformation> invitedPlayers;
   String _selectedSport;
   int _maxPlayers = 20;
   int _selectedMaxPlayers;
@@ -105,6 +107,7 @@ class _CreateGameState extends State<CreateGame> {
             ]),
         body: ListView(children: <Widget>[
           Card(
+              color: Color.fromRGBO(234, 234, 234, 1),
               margin: EdgeInsets.all(10),
               elevation: 4,
               child: Column(
@@ -128,27 +131,27 @@ class _CreateGameState extends State<CreateGame> {
     return ListTile(
       leading: Text("Sport"),
       trailing: Container(
-        margin: EdgeInsets.all(8),
+          margin: EdgeInsets.all(8),
           child: StreamBuilder(
               stream: Firestore.instance.collection("sports").snapshots(),
               builder: (ctx, snapshot) {
                 if (snapshot == null || snapshot.data == null)
                   return Text("Error");
                 return DropdownButton<String>(
-                    value: _selectedSport,
-                    onChanged: (String newValue) {
-                      setState(() {
-                        _selectedSport = newValue;
-                      });
-                    },
-                    items: snapshot.data.documents
-                        .map<DropdownMenuItem<String>>((sport) {
-                          var sportObject = Sport.fromJson(sport.data);
-                      return DropdownMenuItem<String>(
-                        child: Text(sportObject.name),
-                        value: sportObject.name,
-                      );
-                    }).toList(),
+                  value: _selectedSport,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      _selectedSport = newValue;
+                    });
+                  },
+                  items: snapshot.data.documents
+                      .map<DropdownMenuItem<String>>((sport) {
+                    var sportObject = Sport.fromJson(sport.data);
+                    return DropdownMenuItem<String>(
+                      child: Text(sportObject.name),
+                      value: sportObject.name,
+                    );
+                  }).toList(),
                 );
               })),
     );
@@ -211,14 +214,13 @@ class _CreateGameState extends State<CreateGame> {
       trailing: Container(
         margin: EdgeInsets.all(8),
         child: DropdownButton<int>(
-          value: _selectedMaxPlayers,
-          onChanged: (int newValue) {
-            setState(() {
-              _selectedMaxPlayers = newValue;
-            });
-          },
-          items: getMaxPlayerList()
-        ),
+            value: _selectedMaxPlayers,
+            onChanged: (int newValue) {
+              setState(() {
+                _selectedMaxPlayers = newValue;
+              });
+            },
+            items: getMaxPlayerList()),
       ),
     );
   }
@@ -229,9 +231,7 @@ class _CreateGameState extends State<CreateGame> {
     for (var i = 1; i <= _maxPlayers; i++) {
       maxPlayerList.add(DropdownMenuItem(
         value: i,
-        child: Container(
-          padding: EdgeInsets.all(8),
-          child: Text(i.toString())),
+        child: Container(padding: EdgeInsets.all(8), child: Text(i.toString())),
       ));
     }
 
@@ -240,6 +240,7 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get cardGameDescription {
     return Card(
+      color: Color.fromRGBO(234, 234, 234, 1),
       margin: EdgeInsets.all(10),
       elevation: 4,
       child: Column(children: <Widget>[
@@ -263,17 +264,19 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get friends {
     return Card(
-        margin: EdgeInsets.all(12),
+        color: Color.fromRGBO(234, 234, 234, 1),
+        margin: EdgeInsets.all(10),
         elevation: 4,
         child: Column(
           children: <Widget>[
             ListTile(
                 title: Text("Invite friends"),
                 trailing: FloatingActionButton(
-                  child: Icon(Icons.add),
+                  backgroundColor: Color.fromRGBO(234, 234, 234, 1),
+                  child: Icon(Icons.add, color: Color.fromRGBO(43, 59, 67, 1)),
                   mini: true,
-                  elevation: 0,
-                  onPressed: _onAddFriendPressed,
+                  elevation: 4,
+                  onPressed: () => searchFriendDialog,
                 )),
             Divider(),
             UserListItem(
@@ -288,5 +291,52 @@ class _CreateGameState extends State<CreateGame> {
             ),
           ],
         ));
+  }
+
+  Future<Widget> get searchFriendDialog {
+    TextEditingController _textFieldController = TextEditingController();
+    List<AccountInformation> searchResultList = List<AccountInformation>();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          Column friendSearchResult = Column();
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.all(10),
+              title: Text('Search among your friends'),
+              content: Container(
+                width: double.maxFinite,
+                height: 150,
+                child: ListView(children: <Widget>[
+                  TextField(
+                    maxLines: 1,
+                    controller: _textFieldController,
+                    onChanged: (searchTerm) async {
+                      searchResultList.clear();
+                      var searchResult =
+                          await UserDatabaseService().searchUser(searchTerm);
+                      setState(() {
+                        for (var document in searchResult) {
+                          searchResultList
+                              .add(AccountInformation.fromJson(document.data));
+                        }
+                        friendSearchResult = Column(
+                          children: <Widget>[
+                            for (var user in searchResultList)
+                              UserListItem(
+                                  name: user.name,
+                                  rating:
+                                      user.rating != null ? user.rating : "0")
+                          ],
+                        );
+                      });
+                    },
+                  ),
+                  friendSearchResult
+                ]),
+              ),
+            );
+          });
+        });
   }
 }

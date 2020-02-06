@@ -23,4 +23,10 @@ class UserDatabaseService {
   Future getUser(String uid) async {
     return await usersCollection.document(uid).get();
   }
+
+  Future searchUser(String name) async {
+    var result = await usersCollection.where("name", isEqualTo: name).getDocuments();
+
+    return result.documents;
+  }
 }
