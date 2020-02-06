@@ -8,7 +8,6 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(chat.toString());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,

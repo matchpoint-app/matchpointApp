@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:matchpoint/globals.dart' as globals;
 import 'package:matchpoint/models/AccountInformation.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
+import 'package:matchpoint/services/auth-google.dart';
 import 'package:matchpoint/services/auth.dart';
-import 'package:matchpoint/services/eventDatabase.dart';
-import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
-import 'package:matchpoint/globals.dart' as globals;
 
 class Login extends StatefulWidget {
   Login();
@@ -41,6 +40,20 @@ class _LoginState extends State<Login> {
     } else {
       var userAsObject = AccountInformation.fromJson(result.data);
       globals.userInformation = userAsObject;
+      Navigator.of(context).pushReplacementNamed(Routes.App);
+    }
+  }
+
+  void submitGoogle() async {
+    print('google submit');
+    setState(() => _isLoading = true);
+    var result = await GoogleAuth.signInWithGoogle();
+
+    setState(() => _isLoading = false);
+    if (result == null) {
+      print('error');
+      print(result);
+    } else {
       Navigator.of(context).pushReplacementNamed(Routes.App);
     }
   }
@@ -135,7 +148,7 @@ class _LoginState extends State<Login> {
                   children: <Widget>[
                     FlatButton(
                       disabledColor: Colors.black38,
-                      onPressed: _isLoading ? null : submit,
+                      onPressed: submit,
                       color: Colors.black38,
                       padding: EdgeInsets.all(10),
                       child: Text(
@@ -161,7 +174,41 @@ class _LoginState extends State<Login> {
                 )),
           ],
         ),
+        //Divider(),
+        googleButton,
       ],
     ));
+  }
+
+  Widget get googleButton {
+    return OutlineButton(
+      splashColor: Colors.deepOrange,
+      onPressed: submitGoogle,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+                image: AssetImage("assets/images/google_logo.png"),
+                height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

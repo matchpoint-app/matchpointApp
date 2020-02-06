@@ -29,7 +29,7 @@ class _SocialContainerState extends State<SocialContainer> {
 
   void _onChatSelect() {
     Navigator.of(context).pushNamed(Routes.Chat);
-    print("click friend");
+    print("click chat");
   }
 
   @override
