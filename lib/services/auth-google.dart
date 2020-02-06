@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:matchpoint/services/userDatabase.dart';
 
 class GoogleAuth {
   static GoogleSignIn _googleAuth = GoogleSignIn();
@@ -16,6 +17,11 @@ class GoogleAuth {
     final AuthResult result =
         await FirebaseAuth.instance.signInWithCredential(creds);
     assert(result != null);
+
+    if (result.additionalUserInfo.isNewUser) {
+      final UserDatabaseService userDatabaseService = UserDatabaseService();
+      userDatabaseService.updateUser(result.user.uid, null);
+    }
 
     final FirebaseUser user = result.user;
     assert(!user.isAnonymous);
