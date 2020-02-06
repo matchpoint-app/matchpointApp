@@ -11,9 +11,4 @@ class EventDatabaseService {
       game.toJson()
     );
   }
-
-  Future getEvents() async {
-    final result = await gamesCollection.getDocuments();
-
-  }
 }

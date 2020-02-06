@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:matchpoint/globals.dart' as globals;
 import 'package:matchpoint/models/AccountInformation.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/auth-background.dart';
 import 'package:matchpoint/services/auth-google.dart';
 import 'package:matchpoint/services/auth.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
-import 'package:matchpoint/globals.dart' as globals;
 
 class Login extends StatefulWidget {
   Login();
