@@ -35,8 +35,7 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-      final UserDatabaseService userDatabaseService =
-          UserDatabaseService();
+      final UserDatabaseService userDatabaseService = UserDatabaseService();
       userDatabaseService.updateUser(user.uid, null);
       return user;
     } catch (e) {

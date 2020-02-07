@@ -67,15 +67,15 @@ class _ProfileState extends State<Profile> {
 
   Widget get name {
     return ListTile(
-        title: Text(
-            globals.userInformation.name != null
-                ? globals.userInformation.name
-                : '',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        trailing: IconButton(
-          icon: Icon(Icons.edit, color: Colors.grey[700]),
-          onPressed: () => {_displayNameInputDialog(context)},
-        ),
+      title: Text(
+          globals.userInformation.name != null
+              ? globals.userInformation.name
+              : '',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      trailing: IconButton(
+        icon: Icon(Icons.edit, color: Colors.grey[700]),
+        onPressed: () => {_displayNameInputDialog(context)},
+      ),
     );
   }
 
@@ -136,7 +136,8 @@ class _ProfileState extends State<Profile> {
   }
 
   _displayDescriptionInputDialog(BuildContext context) async {
-    TextEditingController _textFieldController = TextEditingController(text: globals.userInformation.description);
+    TextEditingController _textFieldController =
+        TextEditingController(text: globals.userInformation.description ?? "");
     return showDialog(
         context: context,
         builder: (context) {
@@ -215,7 +216,9 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text(globals.userInformation.friends != null ? globals.userInformation.friends.length.toString() : "0")
+        Text(globals.userInformation.friends != null
+            ? globals.userInformation.friends.length.toString()
+            : "0")
       ],
     );
   }
@@ -228,7 +231,7 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text(globals.userInformation.location),
+        Text(globals.userInformation.location ?? "Unknown"),
         SizedBox(width: 10),
         Container(
           width: 20,
@@ -248,9 +251,8 @@ class _ProfileState extends State<Profile> {
                 globals.userInformation.location =
                     p.description != null ? p.description : "Unknown address";
               }),
-
-              UserDatabaseService()
-                  .updateUser(globals.userInformation.id, globals.userInformation)
+              UserDatabaseService().updateUser(
+                  globals.userInformation.id, globals.userInformation)
             },
           ),
         ),

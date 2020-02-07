@@ -5,9 +5,8 @@ import 'package:matchpoint/models/accountInformation.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/models/sport.dart';
+import 'package:matchpoint/screens/games/components/search-friend-list.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
-import 'package:matchpoint/services/userDatabase.dart';
-import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:uuid/uuid.dart';
@@ -33,12 +32,20 @@ class _CreateGameState extends State<CreateGame> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  void _onAddFriendPressed() {
-    // TODO: impl
+  void _onAddFriendPressed(AccountInformation user) {
+    setState(() {
+      if (invitedPlayers.any((invitedPlayer) => invitedPlayer.id == user.id))
+        invitedPlayers
+            .removeWhere((invitedPlayer) => invitedPlayer.id == user.id);
+      else
+        invitedPlayers.add(user);
+    });
   }
 
-  void _onRemoveFriendPressed() {
-    // TODO: impl
+  void _onRemoveFriendPressed(String uid) {
+    setState(() {
+      invitedPlayers.removeWhere((user) => user.id == uid);
+    });
   }
 
   void _onDonePressed(BuildContext ctx) {
@@ -272,71 +279,28 @@ class _CreateGameState extends State<CreateGame> {
             ListTile(
                 title: Text("Invite friends"),
                 trailing: FloatingActionButton(
-                  backgroundColor: Color.fromRGBO(234, 234, 234, 1),
-                  child: Icon(Icons.add, color: Color.fromRGBO(43, 59, 67, 1)),
-                  mini: true,
-                  elevation: 4,
-                  onPressed: () => searchFriendDialog,
-                )),
+                    backgroundColor: Color.fromRGBO(234, 234, 234, 1),
+                    child:
+                        Icon(Icons.add, color: Color.fromRGBO(43, 59, 67, 1)),
+                    mini: true,
+                    elevation: 4,
+                    onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SearchFriendList(
+                              onAddTap: _onAddFriendPressed,
+                              invitedPlayers: invitedPlayers,
+                            ),
+                          ),
+                        ))),
             Divider(),
-            UserListItem(
-              name: 'Conny',
-              rating: '3.5/5',
-              onRemoveTap: _onRemoveFriendPressed,
-            ),
-            UserListItem(
-              name: 'Berit',
-              rating: '5.0/5',
-              onRemoveTap: _onRemoveFriendPressed,
-            ),
+            for (var user in invitedPlayers)
+              UserListItem(
+                name: user.name != null ? user.name : "Unknown",
+                rating: user.rating != null ? user.rating.toString() : "0",
+                onRemoveTap: () => _onRemoveFriendPressed(user.id),
+              )
           ],
         ));
-  }
-
-  Future<Widget> get searchFriendDialog {
-    TextEditingController _textFieldController = TextEditingController();
-    List<AccountInformation> searchResultList = List<AccountInformation>();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          Column friendSearchResult = Column();
-          return StatefulBuilder(builder: (context, setState) {
-            return AlertDialog(
-              contentPadding: EdgeInsets.all(10),
-              title: Text('Search among your friends'),
-              content: Container(
-                width: double.maxFinite,
-                height: 150,
-                child: ListView(children: <Widget>[
-                  TextField(
-                    maxLines: 1,
-                    controller: _textFieldController,
-                    onChanged: (searchTerm) async {
-                      searchResultList.clear();
-                      var searchResult =
-                          await UserDatabaseService().searchUser(searchTerm);
-                      setState(() {
-                        for (var document in searchResult) {
-                          searchResultList
-                              .add(AccountInformation.fromJson(document.data));
-                        }
-                        friendSearchResult = Column(
-                          children: <Widget>[
-                            for (var user in searchResultList)
-                              UserListItem(
-                                  name: user.name,
-                                  rating:
-                                      user.rating != null ? user.rating : "0")
-                          ],
-                        );
-                      });
-                    },
-                  ),
-                  friendSearchResult
-                ]),
-              ),
-            );
-          });
-        });
   }
 }
