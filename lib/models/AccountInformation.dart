@@ -5,8 +5,8 @@ class AccountInformation {
   String location;
   double rating;
   List<Map<String, double>> sports;
-  List<String> groups;
-  List<String> friends;
+  List<dynamic> groups;
+  List<dynamic> friends;
 
   AccountInformation(
       {this.id,
@@ -27,7 +27,7 @@ class AccountInformation {
         rating: json['rating'] as double,
         sports: json['sports'] as dynamic,
         groups: json['groups'] as dynamic,
-        friends: json['friends'] as dynamic);
+        friends: json['friends'] as List<dynamic>);
   }
 
   Map<String, dynamic> toJson() => {

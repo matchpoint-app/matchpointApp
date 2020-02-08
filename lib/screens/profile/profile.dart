@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_maps_webservice/places.dart';
 import 'package:matchpoint/models/AccountInformation.dart';
 import 'package:matchpoint/screens/profile/components/profile.dart';
 import 'package:matchpoint/services/userDatabase.dart';

@@ -20,6 +20,9 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     _accInfo = Provider.of<AccountInformation>(context);
+    // TODO: remove this
+    if (_accInfo == null) return Container();
+
     return ListView(children: <Widget>[
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +129,7 @@ class _ProfileState extends State<Profile> {
 
   _displayDescriptionInputDialog(BuildContext context) async {
     TextEditingController _textFieldController =
-        TextEditingController(text: _accInfo.description);
+        TextEditingController(text: _accInfo.description ?? "");
     return showDialog(
         context: context,
         builder: (context) {
@@ -217,7 +220,7 @@ class _ProfileState extends State<Profile> {
           size: 16,
         ),
         SizedBox(width: 10),
-        //Text(_accInfo.location),
+        Text(_accInfo.location ?? "Unknown"),
         SizedBox(width: 10),
         Container(
           width: 20,

@@ -27,6 +27,15 @@ class UserDatabaseService {
     return result.documents;
   }
 
+  Future searchFriends(String name, List<dynamic> friends) async {
+    var result = await usersCollection
+        .where("id", whereIn: friends)
+        .where("name", isEqualTo: name)
+        .getDocuments();
+
+    return result.documents;
+  }
+
   Stream<AccountInformation> streamAccountInformation(FirebaseUser user) {
     return usersCollection
         .document(user.uid)
