@@ -42,7 +42,10 @@ class _SocialContainerState extends State<SocialContainer> {
           Padding(padding: EdgeInsets.only(top: 20)),
           Padding(
               padding: EdgeInsets.fromLTRB(12, 0, 12, 12),
-              child: SocialSearch(searchControl, this._onSearchClear)),
+              child: SocialSearch(
+                controller: searchControl,
+                onClear: _onSearchClear,
+              )),
           Expanded(
               child: ListView.builder(
             itemCount: 20,

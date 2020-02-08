@@ -163,7 +163,7 @@ packages:
   flutter_google_places:
     dependency: "direct main"
     description:
-      path: "flutter_google_maps_places\\flutter_google_places-0.2.3"
+      path: "flutter_google_maps_places/flutter_google_places-0.2.3"
       relative: true
     source: path
     version: "0.2.3"
@@ -386,7 +386,7 @@ packages:
     source: hosted
     version: "2.2.1"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
