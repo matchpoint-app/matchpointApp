@@ -19,6 +19,7 @@ class _ProfileContainerState extends State<ProfileContainer> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
+    if (user == null) return Container();
 
     return Scaffold(
       appBar: AppBar(

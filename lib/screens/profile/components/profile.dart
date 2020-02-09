@@ -3,7 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:matchpoint/models/profile-information.dart';
+import 'package:matchpoint/routes.dart';
+import 'package:matchpoint/services/auth-google.dart';
 import 'package:matchpoint/services/userDatabase.dart';
+import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -20,8 +23,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     _accInfo = Provider.of<ProfileInformation>(context);
-    // TODO: remove this
-    if (_accInfo == null) return Container();
+    if (_accInfo == null) return Center(child: LoadingIndicator());
 
     return ListView(children: <Widget>[
       Column(
@@ -61,6 +63,17 @@ class _ProfileState extends State<Profile> {
               )),
         ],
       ),
+      Padding(
+          padding: EdgeInsets.all(40),
+          child: FlatButton(
+            child: Text("Signout"),
+            color: Colors.red,
+            onPressed: () {
+              GoogleAuth.signOut().then((_) {
+                Navigator.of(context).pushReplacementNamed(Routes.Login);
+              });
+            },
+          )),
     ]);
   }
 
@@ -110,10 +123,8 @@ class _ProfileState extends State<Profile> {
               new FlatButton(
                 child: new Text('Ok'),
                 onPressed: () {
-                  setState(() {
-                    _accInfo.description = _textFieldController.text;
-                  });
-                  UserDatabaseService().updateUser(_accInfo.id, _accInfo);
+                  UserDatabaseService()
+                      .setUserDescription(_accInfo, _textFieldController.text);
                   Navigator.of(context).pop();
                 },
               ),
@@ -131,8 +142,10 @@ class _ProfileState extends State<Profile> {
   Widget get picture {
     return Padding(
         padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
-        child: CircleAvatar(
-            radius: 30, backgroundImage: NetworkImage(_accInfo.photoUrl)));
+        child: _accInfo.photoUrl != null
+            ? CircleAvatar(
+                radius: 30, backgroundImage: NetworkImage(_accInfo.photoUrl))
+            : Text("no image"));
   }
 
   Widget get profileInformation {

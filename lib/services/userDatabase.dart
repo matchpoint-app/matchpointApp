@@ -41,6 +41,11 @@ class UserDatabaseService {
     return usersCollection
         .document(user.uid)
         .snapshots()
-        .map((snapshot) => ProfileInformation.fromJson(snapshot.data));
+        .map((snapshot) => ProfileInformation.fromJson(snapshot));
+  }
+
+  Future setUserDescription(ProfileInformation profile, String value) async {
+    var data = {'description': value};
+    await usersCollection.document(profile.id).updateData(data);
   }
 }
