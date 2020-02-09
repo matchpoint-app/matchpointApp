@@ -34,7 +34,7 @@ class GoogleAuth {
     return currentUser;
   }
 
-  void signOut() async {
-    await _googleAuth.signOut();
+  static signOut() {
+    return _googleAuth.signOut();
   }
 }

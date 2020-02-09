@@ -1,83 +1,72 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:matchpoint/models/AccountInformation.dart';
-import 'package:matchpoint/screens/profile/components/profile.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:provider/provider.dart';
 
-class ProfileContainer extends StatefulWidget {
-  const ProfileContainer({Key key}) : super(key: key);
+class Profile extends StatefulWidget {
+  const Profile({Key key}) : super(key: key);
 
   @override
-  _ProfileContainerState createState() => new _ProfileContainerState();
+  _ProfileState createState() => new _ProfileState();
 }
 
-class _ProfileContainerState extends State<ProfileContainer> {
-  final userDatabase = UserDatabaseService();
+class _ProfileState extends State<Profile> {
+  Prediction p;
+  AccountInformation _accInfo;
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<FirebaseUser>(context);
+    _accInfo = Provider.of<AccountInformation>(context);
+    // TODO: remove this
+    if (_accInfo == null) return Container();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        centerTitle: true,
+    return ListView(children: <Widget>[
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Card(
+              color: Color.fromRGBO(234, 234, 234, 1),
+              margin: EdgeInsets.all(10),
+              elevation: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  name,
+                  Row(
+                    children: <Widget>[picture, profileInformation],
+                  )
+                ],
+              )),
+          Card(
+              color: Color.fromRGBO(234, 234, 234, 1),
+              margin: EdgeInsets.all(10),
+              elevation: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[descriptionTitle, description],
+              )),
+          Card(
+              color: Color.fromRGBO(234, 234, 234, 1),
+              margin: EdgeInsets.all(10),
+              elevation: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[sportsHeader],
+              )),
+        ],
       ),
-<<<<<<< HEAD
-      body: ListView(children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Card(
-                color: Color.fromRGBO(234, 234, 234, 1),
-                margin: EdgeInsets.all(10),
-                elevation: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    name,
-                    Row(
-                      children: <Widget>[picture, profileInformation],
-                    )
-                  ],
-                )),
-            Card(
-                color: Color.fromRGBO(234, 234, 234, 1),
-                margin: EdgeInsets.all(10),
-                elevation: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[descriptionTitle, description],
-                )),
-            Card(
-                color: Color.fromRGBO(234, 234, 234, 1),
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 50),
-                elevation: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[sportsHeader],
-                )),
-            Center(
-                child: Text("Logout",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)))
-          ],
-        ),
-      ]),
-    );
+    ]);
   }
 
   Widget get name {
     return ListTile(
-      title: Text(
-          globals.userInformation.name != null
-              ? globals.userInformation.name
-              : '',
+      title: Text(_accInfo.name != null ? _accInfo.name : '',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       trailing: IconButton(
         icon: Icon(Icons.edit, color: Colors.grey[700]),
@@ -102,10 +91,9 @@ class _ProfileContainerState extends State<ProfileContainer> {
                 child: new Text('Ok'),
                 onPressed: () {
                   setState(() {
-                    globals.userInformation.name = _textFieldController.text;
+                    _accInfo.name = _textFieldController.text;
                   });
-                  UserDatabaseService().updateUser(
-                      globals.userInformation.id, globals.userInformation);
+                  UserDatabaseService().updateUser(_accInfo.id, _accInfo);
                   Navigator.of(context).pop();
                 },
               ),
@@ -123,17 +111,14 @@ class _ProfileContainerState extends State<ProfileContainer> {
   Widget get descriptionTitle {
     return Padding(
       padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
-      child: Text('About ${globals.userInformation.name}',
+      child: Text('About ${_accInfo.name}',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
     );
   }
 
   Widget get description {
     return ListTile(
-      title: Text(
-          globals.userInformation.description != null
-              ? globals.userInformation.description
-              : '',
+      title: Text(_accInfo.description != null ? _accInfo.description : '',
           style: TextStyle(fontSize: 16)),
       trailing: IconButton(
         icon: Icon(Icons.edit, color: Colors.grey[700]),
@@ -144,7 +129,7 @@ class _ProfileContainerState extends State<ProfileContainer> {
 
   _displayDescriptionInputDialog(BuildContext context) async {
     TextEditingController _textFieldController =
-        TextEditingController(text: globals.userInformation.description ?? "");
+        TextEditingController(text: _accInfo.description ?? "");
     return showDialog(
         context: context,
         builder: (context) {
@@ -162,11 +147,9 @@ class _ProfileContainerState extends State<ProfileContainer> {
                 child: new Text('Ok'),
                 onPressed: () {
                   setState(() {
-                    globals.userInformation.description =
-                        _textFieldController.text;
+                    _accInfo.description = _textFieldController.text;
                   });
-                  UserDatabaseService().updateUser(
-                      globals.userInformation.id, globals.userInformation);
+                  UserDatabaseService().updateUser(_accInfo.id, _accInfo);
                   Navigator.of(context).pop();
                 },
               ),
@@ -223,9 +206,8 @@ class _ProfileContainerState extends State<ProfileContainer> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text(globals.userInformation.friends != null
-            ? globals.userInformation.friends.length.toString()
-            : "0")
+        Text(
+            _accInfo.friends != null ? _accInfo.friends.length.toString() : "0")
       ],
     );
   }
@@ -238,7 +220,7 @@ class _ProfileContainerState extends State<ProfileContainer> {
           size: 16,
         ),
         SizedBox(width: 10),
-        Text(globals.userInformation.location ?? "Unknown"),
+        Text(_accInfo.location ?? "Unknown"),
         SizedBox(width: 10),
         Container(
           width: 20,
@@ -255,11 +237,10 @@ class _ProfileContainerState extends State<ProfileContainer> {
                   context: context,
                   apiKey: "AIzaSyDwXHA1MmHgMGTZZ2IHM_sLHqQbz9LM0uU"),
               setState(() {
-                globals.userInformation.location =
+                _accInfo.location =
                     p.description != null ? p.description : "Unknown address";
               }),
-              UserDatabaseService().updateUser(
-                  globals.userInformation.id, globals.userInformation)
+              UserDatabaseService().updateUser(_accInfo.id, _accInfo)
             },
           ),
         ),
@@ -281,12 +262,6 @@ class _ProfileContainerState extends State<ProfileContainer> {
               child: Icon(Icons.add),
               onPressed: () {}),
         ],
-=======
-      body: StreamProvider<AccountInformation>.value(
-        // All children will have access to weapons data
-        value: userDatabase.streamAccountInformation(user),
-        child: Profile(),
->>>>>>> 42cb42b663512aaa748da51a4437883dce3d6ec5
       ),
     );
   }

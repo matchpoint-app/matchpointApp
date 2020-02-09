@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SocialSearch extends StatelessWidget {
-  const SocialSearch(this.controller, this.onClear);
+  const SocialSearch({this.controller, this.onClear});
 
   final TextEditingController controller;
   final VoidCallback onClear;

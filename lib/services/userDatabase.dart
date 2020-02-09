@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:matchpoint/models/AccountInformation.dart';
 
 class UserDatabaseService {
@@ -11,13 +12,12 @@ class UserDatabaseService {
       var user = AccountInformation(id: uid);
       await usersCollection.document(uid).setData(user.toJson());
     } else {
-      var result =
-          await usersCollection.document(uid).setData(updatedUser.toJson());
+      await usersCollection.document(uid).setData(updatedUser.toJson());
     }
   }
 
-  Future getUser(String uid) async {
-    return await usersCollection.document(uid).get();
+  Future<DocumentSnapshot> getUser(String uid) async {
+    return usersCollection.document(uid).get();
   }
 
   Future searchUser(String name) async {
@@ -34,5 +34,12 @@ class UserDatabaseService {
         .getDocuments();
 
     return result.documents;
+  }
+
+  Stream<AccountInformation> streamAccountInformation(FirebaseUser user) {
+    return usersCollection
+        .document(user.uid)
+        .snapshots()
+        .map((snapshot) => AccountInformation.fromJson(snapshot.data));
   }
 }

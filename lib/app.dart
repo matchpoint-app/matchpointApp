@@ -23,7 +23,7 @@ class _MatchpointAppState extends State<MatchpointApp> {
     ),
     Container(child: GamesContainer()),
     Container(child: SocialContainer()),
-    Container(child: Profile()),
+    Container(child: ProfileContainer()),
   ];
 
   @override
@@ -35,33 +35,37 @@ class _MatchpointAppState extends State<MatchpointApp> {
         physics: NeverScrollableScrollPhysics(),
         onPageChanged: onPageChanged,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home,
-                  color: (_page == 0) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.games,
-                  color: (_page == 1) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.chat_bubble,
-                  color: (_page == 2) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline,
-                  color: (_page == 3) ? Colors.black : Colors.grey),
-              title: Container(height: 0.0),
-              backgroundColor: Colors.white),
-        ],
-        onTap: navigationTapped,
-        currentIndex: _page,
-      ),
+      bottomNavigationBar: _bottomNavigationBar,
+    );
+  }
+
+  Widget get _bottomNavigationBar {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+            icon: Icon(Icons.home,
+                color: (_page == 0) ? Colors.black : Colors.grey),
+            title: Container(height: 0.0),
+            backgroundColor: Colors.white),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.games,
+                color: (_page == 1) ? Colors.black : Colors.grey),
+            title: Container(height: 0.0),
+            backgroundColor: Colors.white),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble,
+                color: (_page == 2) ? Colors.black : Colors.grey),
+            title: Container(height: 0.0),
+            backgroundColor: Colors.white),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline,
+                color: (_page == 3) ? Colors.black : Colors.grey),
+            title: Container(height: 0.0),
+            backgroundColor: Colors.white),
+      ],
+      onTap: navigationTapped,
+      currentIndex: _page,
     );
   }
 
