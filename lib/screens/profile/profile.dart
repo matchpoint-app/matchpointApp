@@ -52,13 +52,17 @@ class _ProfileState extends State<Profile> {
                 )),
             Card(
                 color: Color.fromRGBO(234, 234, 234, 1),
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 50),
                 elevation: 6,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[sportsHeader],
                 )),
+            Center(
+                child: Text("Logout",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)))
           ],
         ),
       ]),
