@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/accountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/screens/games/components/search-friend-item.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/globals.dart' as globals;
 
 class SearchFriendList extends StatelessWidget {
-  final Function(AccountInformation user) onAddTap;
-  final List<AccountInformation> invitedPlayers;
+  final Function(ProfileInformation user) onAddTap;
+  final List<ProfileInformation> invitedPlayers;
   const SearchFriendList({this.onAddTap, this.invitedPlayers});
 
   @override
   Widget build(BuildContext context) {
-    List<AccountInformation> users = new List<AccountInformation>();
+    List<ProfileInformation> users = new List<ProfileInformation>();
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
@@ -39,7 +39,7 @@ class SearchFriendList extends StatelessWidget {
                             searchTerm, globals.userInformation.friends);
                     setState(() {
                       for (var document in searchResult) {
-                        users.add(AccountInformation.fromJson(document.data));
+                        users.add(ProfileInformation.fromJson(document.data));
                       }
                     });
                   }),

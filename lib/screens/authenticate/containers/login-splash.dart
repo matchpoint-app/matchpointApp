@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:matchpoint/routes.dart';
 import 'package:matchpoint/screens/authenticate/components/auth-background.dart';
@@ -21,10 +22,16 @@ class _LoginSplashState extends State<LoginSplash> {
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.onAuthStateChanged.first.then(((user) {
+    FirebaseAuth.instance.onAuthStateChanged.first.then(((user) async {
       if (user != null) {
-        Future.delayed(Duration(milliseconds: 2500),
-            () => Navigator.of(context).pushReplacementNamed(Routes.App));
+        user.getIdToken(refresh: true).then((idTokenResult) {
+          Future.delayed(Duration(milliseconds: 2500),
+              () => Navigator.of(context).pushReplacementNamed(Routes.App));
+        }).catchError((err) {
+          if (err is PlatformException) {
+            FirebaseAuth.instance.signOut();
+          }
+        });
       }
     }));
   }

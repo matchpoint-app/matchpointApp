@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/AccountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/screens/profile/components/profile.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class _ProfileContainerState extends State<ProfileContainer> {
         title: Text('Profile'),
         centerTitle: true,
       ),
-      body: StreamProvider<AccountInformation>.value(
+      body: StreamProvider<ProfileInformation>.value(
         // All children will have access to weapons data
         value: userDatabase.streamAccountInformation(user),
         child: Profile(),

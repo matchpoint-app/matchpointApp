@@ -1,6 +1,7 @@
-class AccountInformation {
+class ProfileInformation {
   String id;
   String name;
+  String photoUrl;
   String description;
   String location;
   double rating;
@@ -8,9 +9,10 @@ class AccountInformation {
   List<dynamic> groups;
   List<dynamic> friends;
 
-  AccountInformation(
+  ProfileInformation(
       {this.id,
       this.name,
+      this.photoUrl,
       this.description,
       this.location,
       this.rating,
@@ -18,10 +20,11 @@ class AccountInformation {
       this.groups,
       this.friends});
 
-  factory AccountInformation.fromJson(dynamic json) {
-    return AccountInformation(
+  factory ProfileInformation.fromJson(dynamic json) {
+    return ProfileInformation(
         id: json['id'] as String,
         name: json['name'] as String,
+        photoUrl: json["photoUrl"] as String,
         description: json['description'] as String,
         location: json['location'] as String,
         rating: json['rating'] as double,
@@ -33,6 +36,7 @@ class AccountInformation {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
+        'photoUrl': photoUrl,
         'description': description,
         'location': location,
         'rating': rating,

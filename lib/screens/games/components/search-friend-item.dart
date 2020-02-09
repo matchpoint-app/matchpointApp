@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/accountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 
 class SearchFriendItem extends StatelessWidget {
-  final AccountInformation user;
+  final ProfileInformation user;
   final VoidCallback onAddTap;
   final bool userAdded;
 

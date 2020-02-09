@@ -1,3 +1,3 @@
-import 'package:matchpoint/models/AccountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 
-AccountInformation userInformation;
+ProfileInformation userInformation;

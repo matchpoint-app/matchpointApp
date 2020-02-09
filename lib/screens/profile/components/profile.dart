@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:matchpoint/models/AccountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:provider/provider.dart';
 
@@ -15,11 +15,11 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   Prediction p;
-  AccountInformation _accInfo;
+  ProfileInformation _accInfo;
 
   @override
   Widget build(BuildContext context) {
-    _accInfo = Provider.of<AccountInformation>(context);
+    _accInfo = Provider.of<ProfileInformation>(context);
     // TODO: remove this
     if (_accInfo == null) return Container();
 
@@ -65,47 +65,11 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget get name {
-    return ListTile(
-      title: Text(_accInfo.name != null ? _accInfo.name : '',
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(_accInfo.name != null ? _accInfo.name : '',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      trailing: IconButton(
-        icon: Icon(Icons.edit, color: Colors.grey[700]),
-        onPressed: () => {_displayNameInputDialog(context)},
-      ),
     );
-  }
-
-  _displayNameInputDialog(BuildContext context) async {
-    TextEditingController _textFieldController = TextEditingController();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            contentPadding: EdgeInsets.all(10),
-            title: Text('Enter your name'),
-            content: TextField(
-              controller: _textFieldController,
-            ),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('Ok'),
-                onPressed: () {
-                  setState(() {
-                    _accInfo.name = _textFieldController.text;
-                  });
-                  UserDatabaseService().updateUser(_accInfo.id, _accInfo);
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                child: Text('Cancel'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
   }
 
   Widget get descriptionTitle {
@@ -166,22 +130,24 @@ class _ProfileState extends State<Profile> {
 
   Widget get picture {
     return Padding(
-        padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+        padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
         child: CircleAvatar(
-            radius: 30,
-            backgroundImage: AssetImage('assets/images/Login.PNG')));
+            radius: 30, backgroundImage: NetworkImage(_accInfo.photoUrl)));
   }
 
   Widget get profileInformation {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        rating,
-        SizedBox(height: 5),
-        friendCount,
-        SizedBox(height: 5),
-        location
-      ],
+    return Padding(
+      padding: EdgeInsets.fromLTRB(8, 0, 16, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          rating,
+          SizedBox(height: 5),
+          friendCount,
+          SizedBox(height: 5),
+          location
+        ],
+      ),
     );
   }
 

@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:matchpoint/models/AccountInformation.dart';
+import 'package:matchpoint/models/profile-information.dart';
 
 class UserDatabaseService {
   final CollectionReference usersCollection =
       Firestore.instance.collection('users');
 
-  Future updateUser(String uid, AccountInformation updatedUser) async {
+  Future updateUser(String uid, ProfileInformation updatedUser) async {
     final userSnapshot = await usersCollection.document(uid).get();
     if (userSnapshot.data == null) {
-      var user = AccountInformation(id: uid);
+      var user = updatedUser;
+      user.id = uid;
       await usersCollection.document(uid).setData(user.toJson());
     } else {
       await usersCollection.document(uid).setData(updatedUser.toJson());
@@ -36,10 +37,10 @@ class UserDatabaseService {
     return result.documents;
   }
 
-  Stream<AccountInformation> streamAccountInformation(FirebaseUser user) {
+  Stream<ProfileInformation> streamAccountInformation(FirebaseUser user) {
     return usersCollection
         .document(user.uid)
         .snapshots()
-        .map((snapshot) => AccountInformation.fromJson(snapshot.data));
+        .map((snapshot) => ProfileInformation.fromJson(snapshot.data));
   }
 }

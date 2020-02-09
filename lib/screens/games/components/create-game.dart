@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/accountInformation.dart';
 import 'package:matchpoint/models/game.dart';
 import 'package:matchpoint/models/location.dart';
+import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/models/sport.dart';
 import 'package:matchpoint/screens/games/components/search-friend-list.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
@@ -25,14 +25,14 @@ class _CreateGameState extends State<CreateGame> {
   double _sliderValue = 1;
   DateTime _date;
   LocationResult _location;
-  List<AccountInformation> invitedPlayers;
+  List<ProfileInformation> invitedPlayers;
   String _selectedSport;
   int _maxPlayers = 20;
   int _selectedMaxPlayers;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  void _onAddFriendPressed(AccountInformation user) {
+  void _onAddFriendPressed(ProfileInformation user) {
     setState(() {
       if (invitedPlayers.any((invitedPlayer) => invitedPlayer.id == user.id))
         invitedPlayers
