@@ -136,15 +136,15 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get type {
     return ListTile(
-      leading: Text("Sport"),
-      trailing: Container(
-          margin: EdgeInsets.all(8),
-          child: StreamBuilder(
-              stream: Firestore.instance.collection("sports").snapshots(),
-              builder: (ctx, snapshot) {
-                if (snapshot == null || snapshot.data == null)
-                  return Text("Error");
-                return DropdownButton<String>(
+      leading: StreamBuilder(
+          stream: Firestore.instance.collection("sports").snapshots(),
+          builder: (ctx, snapshot) {
+            if (snapshot == null || snapshot.data == null) return Text("Error");
+            return Container(
+              width: 200,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  hint: Text("Choose sport"),
                   value: _selectedSport,
                   onChanged: (String newValue) {
                     setState(() {
@@ -159,8 +159,10 @@ class _CreateGameState extends State<CreateGame> {
                       value: sportObject.name,
                     );
                   }).toList(),
-                );
-              })),
+                ),
+              ),
+            );
+          }),
     );
   }
 
@@ -217,17 +219,19 @@ class _CreateGameState extends State<CreateGame> {
 
   Widget get maxPlayers {
     return ListTile(
-      title: Text('Max players'),
-      trailing: Container(
-        margin: EdgeInsets.all(8),
-        child: DropdownButton<int>(
-            value: _selectedMaxPlayers,
-            onChanged: (int newValue) {
-              setState(() {
-                _selectedMaxPlayers = newValue;
-              });
-            },
-            items: getMaxPlayerList()),
+      leading: Container(
+        width: 200,
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<int>(
+              hint: Text("Choose max players"),
+              value: _selectedMaxPlayers,
+              onChanged: (int newValue) {
+                setState(() {
+                  _selectedMaxPlayers = newValue;
+                });
+              },
+              items: getMaxPlayerList()),
+        ),
       ),
     );
   }
@@ -238,7 +242,7 @@ class _CreateGameState extends State<CreateGame> {
     for (var i = 1; i <= _maxPlayers; i++) {
       maxPlayerList.add(DropdownMenuItem(
         value: i,
-        child: Container(padding: EdgeInsets.all(8), child: Text(i.toString())),
+        child: Text(i.toString()),
       ));
     }
 
@@ -294,12 +298,13 @@ class _CreateGameState extends State<CreateGame> {
                           ),
                         ))),
             Divider(),
-            for (var user in invitedPlayers)
-              UserListItem(
-                name: user.name != null ? user.name : "Unknown",
-                rating: user.rating != null ? user.rating.toString() : "0",
-                onRemoveTap: () => _onRemoveFriendPressed(user.id),
-              )
+            if (invitedPlayers != null)
+              for (var user in invitedPlayers)
+                UserListItem(
+                  name: user.name != null ? user.name : "Unknown",
+                  rating: user.rating != null ? user.rating.toString() : "0",
+                  onRemoveTap: () => _onRemoveFriendPressed(user.id),
+                )
           ],
         ));
   }
