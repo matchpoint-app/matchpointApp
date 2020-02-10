@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/profile-information.dart';
-import 'package:matchpoint/screens/profile/components/profile.dart';
+import 'package:matchpoint/screens/profile/components/general.dart';
 import 'package:matchpoint/services/userDatabase.dart';
+import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:provider/provider.dart';
 
 class ProfileContainer extends StatefulWidget {
@@ -22,15 +23,33 @@ class _ProfileContainerState extends State<ProfileContainer> {
     if (user == null) return Container();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        centerTitle: true,
-      ),
-      body: StreamProvider<ProfileInformation>.value(
-        // All children will have access to weapons data
-        value: userDatabase.streamAccountInformation(user),
-        child: Profile(),
-      ),
-    );
+        appBar: AppBar(
+          title: Text('Profile'),
+          centerTitle: true,
+        ),
+        body: StreamProvider<ProfileInformation>.value(
+            // All children will have access to weapons data
+            value: userDatabase.streamAccountInformation(user),
+            child: buildConsumer()));
   }
+
+  Widget buildConsumer() {
+    return Consumer<ProfileInformation>(builder: (_, profile, __) {
+      if (profile == null) {
+        return Center(child: LoadingIndicator());
+      }
+
+      return ListView(
+        padding: EdgeInsets.all(10),
+        children: <Widget>[
+          General(
+            profile: profile,
+            onLocationPress: _onLocationPress,
+          )
+        ],
+      );
+    });
+  }
+
+  void _onLocationPress() {}
 }
