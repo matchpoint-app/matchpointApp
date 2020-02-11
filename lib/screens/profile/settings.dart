@@ -21,6 +21,9 @@ class _SettingsContainerState extends State<SettingsContainer>
   Widget build(BuildContext context) {
     return SettingsList(settings: [
       Setting(text: t('language'), showArrow: true, onTap: _languageSetting),
+      Setting(
+          text: t('privacySafety'), showArrow: true, onTap: _privacySetting),
+
       //Setting(id: 'LANG', text: 'Språk')
     ]);
   }
@@ -32,6 +35,19 @@ class _SettingsContainerState extends State<SettingsContainer>
                 title: Text(t('language')),
               ),
               body: Center(child: Text("English")),
+            )));
+  }
+
+  void _privacySetting() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Scaffold(
+              appBar: AppBar(
+                title: Text(t('privacySafety')),
+              ),
+              body: Center(
+                  child: Card(
+                      child: Text(
+                          "Important information about your account & GDPR"))),
             )));
   }
 }
