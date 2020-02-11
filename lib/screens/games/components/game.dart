@@ -6,14 +6,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:matchpoint/models/game-information.dart';
 import 'package:matchpoint/models/profile-information.dart';
-import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 
 class Game extends StatelessWidget {
   final GameInformation game;
-  const Game({this.game});
+  final List<DocumentSnapshot> players;
+  const Game({this.game, this.players});
 
-  void _onRemoveFriendPressed(String uid) {}
+  void _onRemoveFriendPressed(ProfileInformation player) {
+    Firestore().collection("games").document(game.id).updateData({
+      "players": FieldValue.arrayRemove([player.id])
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +71,11 @@ class Game extends StatelessWidget {
 
   Widget get date {
     return ListTile(
-      leading:
-          Icon(Icons.calendar_today, color: Color.fromRGBO(221, 110, 66, 1)),
-      title: Text(DateFormat("MMM dd hh:mm").format(game.time.toDate())),
-    );
+        leading:
+            Icon(Icons.calendar_today, color: Color.fromRGBO(221, 110, 66, 1)),
+        title: Text(
+          DateFormat("MMM dd hh:mm").format(game.time.toDate()),
+        ));
   }
 
   Widget location(BuildContext context) {
@@ -138,45 +143,34 @@ class Game extends StatelessWidget {
   }
 
   Widget get friends {
-    Stream<QuerySnapshot> stream = Firestore.instance
-        .collection('users')
-        .where("id", whereIn: game.players)
-        .snapshots();
-
-    return StatefulBuilder(builder: (context, setState) {
-      return StreamBuilder<QuerySnapshot>(
-          stream: stream,
-          builder: (ctx, snapshot) {
-            if (!snapshot.hasData) return Center(child: LoadingIndicator());
-            return Card(
-              color: Color.fromRGBO(234, 234, 234, 1),
-              margin: EdgeInsets.all(10),
-              elevation: 4,
-              child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Players joined",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      Divider(),
-                      for (var user in snapshot.data.documents)
-                        UserListItem(
-                            user: ProfileInformation.fromJson(user),
-                            onRemoveTap: () => setState(() {
-                                  Firestore()
-                                      .collection("games")
-                                      .document(game.id)
-                                      .updateData({
-                                    "players": FieldValue.arrayRemove(
-                                        [user.documentID])
-                                  });
-                                })),
-                    ],
-                  )),
-            );
-          });
-    });
+    return Card(
+        color: Color.fromRGBO(234, 234, 234, 1),
+        margin: EdgeInsets.all(10),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance
+                  .collection("users")
+                  .where("id",
+                      whereIn: game.players.length > 0 ? game.players : [""])
+                  .snapshots(),
+              builder: (ctx, snapshot) {
+                if (snapshot == null || snapshot.data == null)
+                  return Text("Error");
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Players joined",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Divider(),
+                    if (snapshot.data != null)
+                      for (var player in snapshot.data.documents)
+                        UserListItem(user: ProfileInformation.fromJson(player))
+                  ],
+                );
+              }),
+        ));
   }
 }
