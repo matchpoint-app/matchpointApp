@@ -33,3 +33,7 @@ profile:
   settings:
     language: "Language"
     privacySafety: "Privacy & Safety"
+    logOut: "Log out"
+    confirmLogout: "Do you want to sign out?"
+    confirmOk: "Ok"
+    confirmCancel: "Cancel"
