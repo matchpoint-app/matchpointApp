@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/screens/profile/components/general.dart';
+import 'package:matchpoint/screens/profile/settings.dart';
 import 'package:matchpoint/services/userDatabase.dart';
 import 'package:matchpoint/ui/loading-indicator.dart';
 import 'package:provider/provider.dart';
@@ -40,12 +41,14 @@ class _ProfileContainerState extends State<ProfileContainer> {
       }
 
       return ListView(
-        padding: EdgeInsets.all(10),
         children: <Widget>[
-          General(
-            profile: profile,
-            onLocationPress: _onLocationPress,
-          )
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: General(
+                profile: profile,
+                onLocationPress: _onLocationPress,
+              )),
+          SettingsContainer()
         ],
       );
     });

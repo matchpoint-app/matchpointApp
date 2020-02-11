@@ -46,12 +46,6 @@ class General extends StatelessWidget {
   }
 
   Widget buildAvatar() {
-    var initials = profile.name
-        .split(' ')
-        .take(2)
-        .map((str) => str.substring(0, 1).toUpperCase())
-        .join();
-
     double size = 36;
 
     return ClipOval(
