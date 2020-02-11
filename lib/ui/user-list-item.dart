@@ -11,10 +11,10 @@ class UserListItem extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return ListTile(
-      leading: Icon(
-        Icons.person,
-        size: 48,
-      ),
+      leading: user.photoUrl != null
+          ? CircleAvatar(
+              radius: 30, backgroundImage: NetworkImage(user.photoUrl))
+          : Text("no image"),
       title: Text(user.name),
       subtitle: Row(children: <Widget>[
         Icon(Icons.star, size: 14, color: Colors.black45),

@@ -37,6 +37,13 @@ class UserDatabaseService {
     return result.documents;
   }
 
+  Future getPlayers(List<dynamic> players) async {
+    var result =
+        await usersCollection.where("id", whereIn: players).getDocuments();
+
+    return result.documents;
+  }
+
   Stream<ProfileInformation> streamAccountInformation(FirebaseUser user) {
     return usersCollection
         .document(user.uid)

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:matchpoint/models/game-information.dart';
-
-import 'game.dart';
+import 'package:matchpoint/screens/games/containers/game-container.dart';
 
 class GamesListCard extends StatelessWidget {
   const GamesListCard(this.game);
@@ -15,7 +14,8 @@ class GamesListCard extends StatelessWidget {
       onTap: () => Navigator.push(
           ctx,
           MaterialPageRoute(
-              fullscreenDialog: true, builder: (ctx) => Game(game: game))),
+              fullscreenDialog: true,
+              builder: (ctx) => GameContainer(game: game))),
       child: Card(
         color: Color.fromRGBO(234, 234, 234, 1),
         margin: EdgeInsets.all(10),

@@ -8,4 +8,11 @@ class EventDatabaseService {
   Future updateEvent(GameInformation game) async {
     return await gamesCollection.document(game.id).setData(game.toJson());
   }
+
+  Stream<GameInformation> streamGameInformation(GameInformation game) {
+    return gamesCollection
+        .document(game.id)
+        .snapshots()
+        .map((snapshot) => GameInformation.fromJson(snapshot));
+  }
 }
