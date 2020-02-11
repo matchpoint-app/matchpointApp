@@ -48,4 +48,9 @@ class UserDatabaseService {
     var data = {'description': value};
     await usersCollection.document(profile.id).updateData(data);
   }
+
+  Future setUserLocation(ProfileInformation profile, String value) async {
+    var data = {'location': value};
+    await usersCollection.document(profile.id).updateData(data);
+  }
 }

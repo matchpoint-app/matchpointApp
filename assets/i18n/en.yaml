@@ -22,5 +22,14 @@ social:
   search: "Search"
 
 profile:
+  title: "Profile"
+  actionEdit: "Edit"
+  actionSave: "Save"
+  locationMissing: "Unknown"
+  titleDescription: "DESCRIPTION"
+  titleLocation: "LOCATION"
+  titleGeneral: "GENERAL"
+
   settings:
     language: "Language"
+    privacySafety: "Privacy & Safety"

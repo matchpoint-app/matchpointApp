@@ -5,11 +5,9 @@ import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/screens/profile/components/meta-row.dart';
 
 class General extends StatelessWidget {
-  const General({this.profile, this.onLocationPress, Key key})
-      : super(key: key);
+  const General({this.profile, Key key}) : super(key: key);
 
   final ProfileInformation profile;
-  final VoidCallback onLocationPress;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +84,6 @@ class General extends StatelessWidget {
         MetaRow(icon: Icons.star, text: profile.rating?.toString() ?? 'N/A'),
         MetaRow(
             icon: Icons.group, text: profile.friends?.length.toString() ?? '0'),
-        MetaRow(icon: Icons.location_on, text: profile.location ?? 'N/A')
       ],
     );
   }
