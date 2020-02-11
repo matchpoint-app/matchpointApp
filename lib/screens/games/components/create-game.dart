@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:matchpoint/models/game.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:matchpoint/models/game-information.dart';
 import 'package:matchpoint/models/location.dart';
 import 'package:matchpoint/models/profile-information.dart';
 import 'package:matchpoint/models/sport.dart';
 import 'package:matchpoint/screens/games/components/search-friend-list.dart';
 import 'package:matchpoint/services/eventDatabase.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:matchpoint/globals.dart' as globals;
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key key, this.pageTitle}) : super(key: key);
@@ -24,6 +25,7 @@ class CreateGame extends StatefulWidget {
 class _CreateGameState extends State<CreateGame> {
   double _sliderValue = 1;
   DateTime _date;
+  bool _isPrivate = false;
   LocationResult _location;
   List<ProfileInformation> invitedPlayers;
   String _selectedSport;
@@ -31,6 +33,7 @@ class _CreateGameState extends State<CreateGame> {
   int _selectedMaxPlayers;
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  FirebaseUser user;
 
   void _onAddFriendPressed(ProfileInformation user) {
     setState(() {
@@ -49,13 +52,13 @@ class _CreateGameState extends State<CreateGame> {
   }
 
   void _onDonePressed(BuildContext ctx) {
-    final game = new Game(
+    final game = new GameInformation(
         id: new Uuid().v1(),
         title: titleController.text,
         description: descriptionController.text,
         type: _selectedSport,
         skillLevel: _sliderValue,
-        private: false,
+        private: _isPrivate,
         location: new Location(
             name: _location.address != null
                 ? _location.address
@@ -63,9 +66,9 @@ class _CreateGameState extends State<CreateGame> {
             latitude: _location.latLng.latitude,
             longitude: _location.latLng.longitude),
         time: Timestamp.fromDate(_date),
-        owner: globals.userInformation.id,
-        players: ['1', '2'],
-        invitedPlayers: [],
+        owner: user.uid,
+        players: [],
+        invitedPlayers: invitedPlayers,
         usersMax: _selectedMaxPlayers);
 
     EventDatabaseService().updateEvent(game);
@@ -98,6 +101,7 @@ class _CreateGameState extends State<CreateGame> {
 
   @override
   Widget build(BuildContext ctx) {
+    user = Provider.of<FirebaseUser>(ctx);
     return Scaffold(
         appBar: AppBar(
             title: Text("Create event"),
@@ -113,6 +117,7 @@ class _CreateGameState extends State<CreateGame> {
               )
             ]),
         body: ListView(children: <Widget>[
+          cardGameDescription,
           Card(
               color: Color.fromRGBO(234, 234, 234, 1),
               margin: EdgeInsets.all(10),
@@ -123,13 +128,13 @@ class _CreateGameState extends State<CreateGame> {
                 children: <Widget>[
                   type,
                   maxPlayers,
+                  privateSwitch,
                   date,
                   location,
                   skillText,
                   slider
                 ],
               )),
-          cardGameDescription,
           friends,
         ]));
   }
@@ -163,6 +168,18 @@ class _CreateGameState extends State<CreateGame> {
               ),
             );
           }),
+    );
+  }
+
+  Widget get privateSwitch {
+    return Container(
+      width: 230,
+      child: SwitchListTile(
+          title: Text("Private"),
+          value: _isPrivate,
+          onChanged: (value) => setState(() {
+                _isPrivate = value;
+              })),
     );
   }
 
@@ -301,8 +318,7 @@ class _CreateGameState extends State<CreateGame> {
             if (invitedPlayers != null)
               for (var user in invitedPlayers)
                 UserListItem(
-                  name: user.name != null ? user.name : "Unknown",
-                  rating: user.rating != null ? user.rating.toString() : "0",
+                  user: user,
                   onRemoveTap: () => _onRemoveFriendPressed(user.id),
                 )
           ],

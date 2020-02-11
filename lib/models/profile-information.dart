@@ -37,8 +37,8 @@ class ProfileInformation {
         location: data['location'] as String,
         rating: data['rating'] as double,
         sports: (data['sports'] as List)
-            .map((sport) => Sport.fromJson(sport))
-            .toList(),
+            ?.map((sport) => Sport.fromJson(sport))
+            ?.toList(),
         groups: data['groups'] as List<dynamic>,
         friends: data['friends'] as List<dynamic>);
   }

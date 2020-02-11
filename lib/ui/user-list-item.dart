@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:matchpoint/models/profile-information.dart';
 
 class UserListItem extends StatelessWidget {
   final VoidCallback onRemoveTap;
-  final String name;
-  final String rating;
+  final ProfileInformation user;
 
-  const UserListItem({this.name, this.rating, this.onRemoveTap});
+  const UserListItem({this.user, this.onRemoveTap});
 
   @override
   Widget build(BuildContext ctx) {
@@ -15,10 +15,10 @@ class UserListItem extends StatelessWidget {
         Icons.person,
         size: 48,
       ),
-      title: Text(name),
+      title: Text(user.name),
       subtitle: Row(children: <Widget>[
         Icon(Icons.star, size: 14, color: Colors.black45),
-        Text(rating, style: TextStyle(fontSize: 12))
+        Text(user.rating ?? "0", style: TextStyle(fontSize: 12))
       ]),
       trailing: onRemoveTap != null
           ? IconButton(

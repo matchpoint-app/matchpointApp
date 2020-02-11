@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:matchpoint/models/location.dart';
 
-class Game {
+class GameInformation {
   final String id;
   final String title;
   final String description;
@@ -15,7 +15,7 @@ class Game {
   final double skillLevel;
   final bool private;
 
-  Game(
+  GameInformation(
       {this.id,
       this.title,
       this.description,
@@ -29,8 +29,8 @@ class Game {
       this.skillLevel,
       this.private});
 
-   factory Game.fromJson(dynamic json) {
-    return Game(
+  factory GameInformation.fromJson(dynamic json) {
+    return GameInformation(
         id: json['id'] as String,
         title: json['title'] as String,
         description: json['description'] as String,

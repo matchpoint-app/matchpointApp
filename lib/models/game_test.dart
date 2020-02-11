@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:matchpoint/models/game.dart';
+import 'package:matchpoint/models/game-information.dart';
 
 void main() {
   String json = '''{
@@ -15,7 +15,7 @@ void main() {
     }''';
 
   test('Decode Json', () {
-    Game s = Game.fromJson(jsonDecode(json));
+    GameInformation s = GameInformation.fromJson(jsonDecode(json));
     print(s);
     assert(s != null);
     expect(s.id, "test");
