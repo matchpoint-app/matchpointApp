@@ -5,9 +5,13 @@ class Setting {
   final String text;
   final VoidCallback onTap;
   final bool showArrow;
+  final Color textColor;
 
   const Setting(
-      {@required this.text, @required this.onTap, this.showArrow = false});
+      {@required this.text,
+      @required this.onTap,
+      this.showArrow = false,
+      this.textColor = Colors.black});
 }
 
 class SettingsList extends StatelessWidget {
@@ -49,7 +53,7 @@ class SettingsList extends StatelessWidget {
                   children: [
                     Text(
                       setting.text,
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16, color: setting.textColor),
                     ),
                     if (setting.showArrow)
                       Icon(Icons.arrow_forward_ios, color: Colors.black45),
