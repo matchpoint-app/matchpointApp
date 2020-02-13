@@ -47,40 +47,51 @@ class Game extends StatelessWidget {
   }
 
   Widget get type {
-    return ListTile(
-      leading: Icon(Icons.gamepad, color: Color.fromRGBO(221, 110, 66, 1)),
-      title: Text("${game.type}", style: TextStyle(fontSize: 16)),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Text("${game.type}",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
     );
   }
 
   Widget get maxPlayers {
-    return ListTile(
-      leading: Icon(Icons.people, color: Color.fromRGBO(221, 110, 66, 1)),
-      title: Text("${game.usersMax}", style: TextStyle(fontSize: 16)),
+    return Container(
+      height: 40,
+      child: ListTile(
+        leading: Icon(Icons.people, color: Color.fromRGBO(221, 110, 66, 1)),
+        title: Text("${game.usersMax}", style: TextStyle(fontSize: 16)),
+      ),
     );
   }
 
   Widget get private {
-    return ListTile(
-      leading: Icon(game.private ? Icons.lock : Icons.lock_open,
-          color: Color.fromRGBO(221, 110, 66, 1)),
-      title: Text("${game.private ? "Yes" : "No"}",
-          style: TextStyle(fontSize: 16)),
+    return Container(
+      height: 40,
+      child: ListTile(
+        leading: Icon(game.private ? Icons.lock : Icons.lock_open,
+            color: Color.fromRGBO(221, 110, 66, 1)),
+        title: Text("${game.private ? "Yes" : "No"}",
+            style: TextStyle(fontSize: 16)),
+      ),
     );
   }
 
   Widget get date {
-    return ListTile(
-        leading:
-            Icon(Icons.calendar_today, color: Color.fromRGBO(221, 110, 66, 1)),
-        title: Text(
-          DateFormat("MMM dd hh:mm").format(game.time.toDate()),
-        ));
+    return Container(
+      height: 40,
+      child: ListTile(
+          leading: Icon(Icons.calendar_today,
+              color: Color.fromRGBO(221, 110, 66, 1)),
+          title: Text(
+            DateFormat("MMM dd hh:mm").format(game.time.toDate()),
+          )),
+    );
   }
 
   Widget location(BuildContext context) {
     return Container(
       width: 400,
+      height: 40,
       child: ListTile(
         leading:
             Icon(Icons.add_location, color: Color.fromRGBO(221, 110, 66, 1)),
