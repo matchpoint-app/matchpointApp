@@ -15,4 +15,20 @@ class EventDatabaseService {
         .snapshots()
         .map((snapshot) => GameInformation.fromJson(snapshot));
   }
+
+  Future joinGame(String uid, String gameId) async {
+    await gamesCollection.document(gameId).updateData({
+      "invitedPlayers": FieldValue.arrayRemove([uid])
+    });
+
+    return await gamesCollection.document(gameId).updateData({
+      "players": FieldValue.arrayUnion([uid])
+    });
+  }
+
+  Future requestToJoinGame(String uid, String gameId) async {
+    return await gamesCollection.document(gameId).updateData({
+      "playerRequests": FieldValue.arrayUnion([uid])
+    });
+  }
 }

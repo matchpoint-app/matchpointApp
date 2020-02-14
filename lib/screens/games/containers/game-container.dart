@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:matchpoint/models/game-information.dart';
@@ -16,9 +17,11 @@ class GameContainer extends StatefulWidget {
 
 class _GameContainerState extends State<GameContainer> {
   final eventDatabase = EventDatabaseService();
+  FirebaseUser user;
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<FirebaseUser>(context);
     return Scaffold(
         body: StreamProvider<GameInformation>.value(
             // All children will have access to weapons data
@@ -32,7 +35,10 @@ class _GameContainerState extends State<GameContainer> {
         return Center(child: LoadingIndicator());
       }
 
-      return Game(game: game);
+      return Game(
+        game: game,
+        userId: user.uid,
+      );
     });
   }
 }

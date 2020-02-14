@@ -177,7 +177,7 @@ packages:
   flutter_google_places:
     dependency: "direct main"
     description:
-      path: "flutter_google_maps_places/flutter_google_places-0.2.3"
+      path: "flutter_google_maps_places\\flutter_google_places-0.2.3"
       relative: true
     source: path
     version: "0.2.3"
@@ -218,7 +218,7 @@ packages:
     source: sdk
     version: "0.0.0"
   geolocator:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: geolocator
       url: "https://pub.dartlang.org"

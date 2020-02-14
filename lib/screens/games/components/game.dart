@@ -6,12 +6,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:matchpoint/models/game-information.dart';
 import 'package:matchpoint/models/profile-information.dart';
+import 'package:matchpoint/services/eventDatabase.dart';
 import 'package:matchpoint/ui/user-list-item.dart';
 
 class Game extends StatelessWidget {
+  final String userId;
   final GameInformation game;
   final List<DocumentSnapshot> players;
-  const Game({this.game, this.players});
+  const Game({this.userId, this.game, this.players});
 
   void _onRemoveFriendPressed(ProfileInformation player) {
     Firestore().collection("games").document(game.id).updateData({
@@ -19,10 +21,22 @@ class Game extends StatelessWidget {
     });
   }
 
+  void _joinGame() async {
+    if (game.invitedPlayers.any((player) => player == userId))
+      await EventDatabaseService().joinGame(userId, game.id);
+    else
+      EventDatabaseService().requestToJoinGame(userId, game.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(game.title), centerTitle: true),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton:
+            game.players.any((player) => player == userId) != null
+                ? floatingActionButton
+                : null,
         body: ListView(children: <Widget>[
           cardGameDescription,
           Card(
@@ -44,6 +58,11 @@ class Game extends StatelessWidget {
               )),
           friends,
         ]));
+  }
+
+  Widget get floatingActionButton {
+    return FloatingActionButton(
+        child: Text("Join"), onPressed: () => _joinGame());
   }
 
   Widget get type {

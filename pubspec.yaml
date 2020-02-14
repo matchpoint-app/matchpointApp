@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   google_maps_flutter: any
   google_maps_webservice: ^0.0.14
+  geolocator: ^5.2.1
   flutter_google_places:
     path: ./flutter_google_maps_places/flutter_google_places-0.2.3/
   location: ^2.3.5

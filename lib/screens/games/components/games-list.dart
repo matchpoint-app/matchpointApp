@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:matchpoint/models/game-information.dart';
 import 'package:matchpoint/screens/games/components/games-list-card.dart';
-import 'package:matchpoint/ui/loading-indicator.dart';
 
 class GamesList extends StatelessWidget {
+  final List<GameInformation> games;
+  const GamesList({this.games});
+
   void onListItemClick(BuildContext ctx) {
     Navigator.push(
         ctx,
@@ -21,17 +22,14 @@ class GamesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctx) {
-    return StreamBuilder(
-        stream: Firestore.instance.collection('games').snapshots(),
-        builder: (ctx, snapshot) {
-          if (!snapshot.hasData) return Center(child: LoadingIndicator());
-          return ListView.builder(
-            itemCount: snapshot.data.documents.length,
-            itemBuilder: (ctx, index) {
-              return GamesListCard(GameInformation.fromJson(
-                  snapshot.data.documents[index].data));
-            },
-          );
-        });
+    return Container(
+      height: MediaQuery.of(ctx).size.height - 200,
+      child: ListView.builder(
+        itemCount: games.length,
+        itemBuilder: (ctx, index) {
+          return GamesListCard(games[index]);
+        },
+      ),
+    );
   }
 }
