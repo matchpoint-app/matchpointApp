@@ -24,12 +24,14 @@ class GamesList extends StatelessWidget {
   Widget build(BuildContext ctx) {
     return Container(
       height: MediaQuery.of(ctx).size.height - 200,
-      child: ListView.builder(
-        itemCount: games.length,
-        itemBuilder: (ctx, index) {
-          return GamesListCard(games[index]);
-        },
-      ),
+      child: games.length > 0
+          ? ListView.builder(
+              itemCount: games.length,
+              itemBuilder: (ctx, index) {
+                return GamesListCard(games[index]);
+              },
+            )
+          : Center(child: Text("No games here at the moment...")),
     );
   }
 }

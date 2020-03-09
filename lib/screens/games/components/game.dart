@@ -33,10 +33,9 @@ class Game extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text(game.title), centerTitle: true),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-            game.players.any((player) => player == userId) != null
-                ? floatingActionButton
-                : null,
+        floatingActionButton: game.players.any((player) => player == userId)
+            ? null
+            : floatingActionButton,
         body: ListView(children: <Widget>[
           cardGameDescription,
           Card(
